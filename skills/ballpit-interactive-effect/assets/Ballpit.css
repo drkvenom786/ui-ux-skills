@@ -1,0 +1,25 @@
+.ballpit-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: none;
+}
+
+.ballpit-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  pointer-events: auto;
+}
+
+.ballpit-container[data-grab='true'] {
+  cursor: grab;
+}
+
+.ballpit-container[data-grabbing='true'] {
+  cursor: grabbing;
+}
