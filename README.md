@@ -1,6 +1,6 @@
 # UI/UX Interactive Skills 🎨✨
 
-A curated, production-ready collection of **19 high-performance interactive UI/UX components and visual effects** inspired by [React Bits](https://reactbits.dev).
+A curated, production-ready collection of **20 high-performance interactive UI/UX components and visual effects** inspired by [React Bits](https://reactbits.dev).
 
 Every skill in this repository is completely self-contained with:
 1. **`SKILL.md`**: Complete documentation, mathematical physics formulations, props API tables, integration patterns, and accessibility guidelines.
@@ -30,6 +30,7 @@ Every skill in this repository is completely self-contained with:
 | [**LiquidEther**](skills/liquid-ether-interactive-effect/) | Fluid Dynamics | WebGL2 Navier-Stokes, Pressure Projection | `LiquidEther.jsx` | `liquidether.js` | Organic multi-color fluid dynamics background with click bursts and glassmorphic layers. |
 | [**ParticleText**](skills/particle-text-interactive-effect/) | Typography & Particles | HTML5 2D Canvas, Staggered Intro | `ParticleText.jsx` | `particletext.js` | Motion-reactive particle text with 4 intro choreographies (gather, rain, spiral, scan). |
 | [**PillNav**](skills/pill-nav-interactive-effect/) | Navigation | Spring Dynamics, SVG Ink-Fill, ResizeObserver | `PillNav.jsx` | `pillnav.js` | Floating capsule navbar with circular ink rollouts, sliding dot indicator, and morphing mobile drawer. |
+| [**SlingButton**](skills/sling-button-interactive-effect/) | Buttons & Feedback | Tangent Catenary Band, Recoil Spring | `SlingButton.jsx` | `sling-button.js` | Elastic pull-to-send slingshot button with armed power arc and directional particle burst. |
 | [**SpecularBorder**](skills/specular-border-interactive-effect/) | Buttons & Borders | WebGL2, Edge Ray-Tracing, Glassmorphism | `SpecularButton.jsx` | `specular.js` | Dynamic perimeter specular border ray reflection that tracks cursor proximity in real time. |
 | [**SplashCursor**](skills/splash-cursor-interactive-effect/) | Cursors & Fluids | WebGL2 Navier-Stokes, Multi-Pass Bloom | `SplashCursor.jsx` | `splashcursor.js` | High-viscosity ink splashes, vorticity confinement, and rainbow fluid cursor trails. |
 | [**WarpText**](skills/warp-text-interactive-effect/) | Typography & Optics | WebGL2 Refraction, Chromatic Dispersion | `WarpText.jsx` | `warptext.js` | Fluid optical glass refraction, ambient wave undulations, and cursor shockwave ripples. |
@@ -44,62 +45,27 @@ ui-ux-skills/
 ├── .gitignore
 └── skills/
     ├── antigravity-interactive-effect/
-    │   ├── SKILL.md
-    │   └── assets/ (Antigravity.jsx, Antigravity.css, antigravity.js)
     ├── ballpit-interactive-effect/
-    │   ├── SKILL.md
-    │   └── assets/ (Ballpit.jsx, Ballpit.css, ballpit.js)
     ├── dock-interactive-effect/
-    │   ├── SKILL.md
-    │   └── assets/ (Dock.jsx, Dock.css, dock.js)
     ├── dodge-field-interactive-effect/
-    │   ├── SKILL.md
-    │   └── assets/ (DodgeField.jsx, DodgeField.css, dodge-field.js)
     ├── dotfield-interactive-effect/
-    │   ├── SKILL.md
-    │   └── assets/ (DotField.jsx, DotField.css, dotfield.js)
     ├── elastic-mesh-interactive-effect/
-    │   ├── SKILL.md
-    │   └── assets/ (ElasticMesh.jsx, ElasticMesh.css, elastic-mesh.js)
     ├── falling-text-interactive-effect/
-    │   ├── SKILL.md
-    │   └── assets/ (FallingText.jsx, FallingText.css, fallingtext.js)
     ├── folder-interactive-effect/
-    │   ├── SKILL.md
-    │   └── assets/ (Folder.jsx, Folder.css, folder.js)
     ├── glitch-text-interactive-effect/
-    │   ├── SKILL.md
-    │   └── assets/ (GlitchText.jsx, GlitchText.css, glitchtext.js)
     ├── glow-cursor-interactive-effect/
-    │   ├── SKILL.md
-    │   └── assets/ (GlowCursor.jsx, GlowCursor.css, glowcursor.js)
     ├── gooey-nav-interactive-effect/
-    │   ├── SKILL.md
-    │   └── assets/ (GooeyNav.jsx, GooeyNav.css, gooeynav.js)
     ├── lanyard-interactive-effect/
-    │   ├── SKILL.md
-    │   └── assets/ (Lanyard.jsx, Lanyard.css, lanyard.js)
     ├── laser-flow-interactive-effect/
-    │   ├── SKILL.md
-    │   └── assets/ (LaserFlow.jsx, LaserFlow.css, laserflow.js)
     ├── liquid-ether-interactive-effect/
-    │   ├── SKILL.md
-    │   └── assets/ (LiquidEther.jsx, LiquidEther.css, liquidether.js)
     ├── particle-text-interactive-effect/
-    │   ├── SKILL.md
-    │   └── assets/ (ParticleText.jsx, ParticleText.css, particletext.js)
     ├── pill-nav-interactive-effect/
+    ├── sling-button-interactive-effect/
     │   ├── SKILL.md
-    │   └── assets/ (PillNav.jsx, PillNav.css, pillnav.js)
+    │   └── assets/ (SlingButton.jsx, SlingButton.css, sling-button.js)
     ├── specular-border-interactive-effect/
-    │   ├── SKILL.md
-    │   └── assets/ (SpecularButton.jsx, SpecularButton.css, specular.js)
     ├── splash-cursor-interactive-effect/
-    │   ├── SKILL.md
-    │   └── assets/ (SplashCursor.jsx, SplashCursor.css, splashcursor.js)
     └── warp-text-interactive-effect/
-        ├── SKILL.md
-        └── assets/ (WarpText.jsx, WarpText.css, warptext.js, water-drop.wav)
 ```
 
 ---
@@ -112,18 +78,17 @@ Copy the target component and CSS file into your components folder:
 ```jsx
 'use client';
 
-import Dock from './skills/dock-interactive-effect/assets/Dock';
-import './skills/dock-interactive-effect/assets/Dock.css';
+import SlingButton from './skills/sling-button-interactive-effect/assets/SlingButton';
+import './skills/sling-button-interactive-effect/assets/SlingButton.css';
 
-export default function App() {
+export default function SendInput() {
   return (
-    <Dock
-      items={[
-        { label: 'Home', icon: '🏠', active: true },
-        { label: 'Settings', icon: '⚙️' }
-      ]}
-      position="bottom"
-      theme="dark"
+    <SlingButton
+      onSend={() => console.log('Sent!')}
+      padColor="#6366f1"
+      accentColor="#a5b4fc"
+      launchSpeed={2800}
+      particles={14}
     />
   );
 }
@@ -136,22 +101,18 @@ Include the stylesheet and script tag in your HTML:
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <link rel="stylesheet" href="./skills/ballpit-interactive-effect/assets/Ballpit.css">
-  <style>
-    body { margin: 0; height: 100vh; overflow: hidden; }
-    #container { width: 100%; height: 100%; position: relative; }
-  </style>
+  <link rel="stylesheet" href="./skills/sling-button-interactive-effect/assets/SlingButton.css">
 </head>
 <body>
-  <div id="container"></div>
+  <div id="btn-container"></div>
 
-  <script src="./skills/ballpit-interactive-effect/assets/ballpit.js"></script>
+  <script src="./skills/sling-button-interactive-effect/assets/sling-button.js"></script>
   <script>
-    const pit = Ballpit.init(document.getElementById('container'), {
-      count: 200,
-      gravity: 0.2,
-      drift: 0.4,
-      clickEffect: 'burst'
+    const button = SlingButton.init(document.getElementById('btn-container'), {
+      size: 56,
+      padColor: '#3b82f6',
+      launchSpeed: 2600,
+      onSend: () => console.log('Fired!')
     });
   </script>
 </body>
