@@ -37,7 +37,7 @@
 
   const BAND_COLUMNS = [0, 0.07, 0.93, 1];
   const BAND_BEND = [-0.95, -0.28, 0.28, 0.95];
-  const FLIP_SPIN = 9;
+  const FLIP_SPIN = 14;
 
   const FOIL_VERTEX_HEAD = `
 varying vec2 vFoilUv;
@@ -435,14 +435,27 @@ if (foilStrength > 0.0) {
   };
 
   const paintStrap = (canvas, image, color) => {
-    const across = 192;
+    const across = 256;
     const along = image ? Math.max(64, Math.round((image.width / image.height) * across)) : across * 2;
     canvas.width = across;
     canvas.height = along;
     const ctx = canvas.getContext('2d');
     if (!ctx) return along / across;
+
+    // Base ribbon color fill
     ctx.fillStyle = toCss(color);
     ctx.fillRect(0, 0, across, along);
+
+    // Subtle 3D cylindrical ribbon gradient across the strap
+    const grad = ctx.createLinearGradient(0, 0, across, 0);
+    grad.addColorStop(0, 'rgba(0, 0, 0, 0.35)');
+    grad.addColorStop(0.12, 'rgba(255, 255, 255, 0.15)');
+    grad.addColorStop(0.5, 'rgba(255, 255, 255, 0.35)');
+    grad.addColorStop(0.88, 'rgba(255, 255, 255, 0.1)');
+    grad.addColorStop(1, 'rgba(0, 0, 0, 0.4)');
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, across, along);
+
     if (image) {
       ctx.save();
       ctx.translate(across, 0);
@@ -451,14 +464,20 @@ if (foilStrength > 0.0) {
       ctx.restore();
       return along / across;
     }
-    const ink = luminance(color) > 0.5 ? [0, 0, 0] : [1, 1, 1];
-    ctx.fillStyle = toCss(ink, 0.05);
-    for (let y = 0; y < along; y += 4) ctx.fillRect(0, y, across, 1);
-    ctx.fillStyle = toCss(ink, 0.2);
-    for (let y = 0; y < along; y += 14) {
-      ctx.fillRect(across * 0.075, y, 2, 8);
-      ctx.fillRect(across * 0.925 - 2, y, 2, 8);
+
+    // Micro herringbone ribbon weave ribs
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.12)';
+    for (let y = 0; y < along; y += 4) {
+      ctx.fillRect(0, y, across, 1.5);
     }
+
+    // Fine edge stitching
+    ctx.fillStyle = 'rgba(255, 235, 170, 0.55)';
+    for (let y = 0; y < along; y += 12) {
+      ctx.fillRect(across * 0.08, y, 2.5, 7);
+      ctx.fillRect(across * 0.92 - 2.5, y, 2.5, 7);
+    }
+
     return along / across;
   };
 
@@ -521,9 +540,10 @@ if (foilStrength > 0.0) {
     const camera = new THREE.PerspectiveCamera(FOV, 1, 0.1, 200);
     const keyLight = new THREE.DirectionalLight(0xffffff, 1.6);
     keyLight.position.set(-2.5, 4, 6);
-    const fillLight = new THREE.DirectionalLight(0xffffff, 0.35);
+    const fillLight = new THREE.DirectionalLight(0xffffff, 0.45);
     fillLight.position.set(3, -1, 4);
-    scene.add(keyLight, fillLight);
+    const ambientLight = new THREE.AmbientLight(0xffffff, 1.2);
+    scene.add(keyLight, fillLight, ambientLight);
 
     const imageCache = new Map();
     const images = { front: null, back: null, strap: null };
@@ -568,14 +588,14 @@ if (foilStrength > 0.0) {
     backMaterial.onBeforeCompile = injectFoil;
     const edgeMaterial = new THREE.MeshPhysicalMaterial();
     const metalMaterial = new THREE.MeshStandardMaterial({ metalness: 1 });
-    const bandMaterial = new THREE.MeshPhysicalMaterial({
+    const strapBaseColor = parseColor(options.strapColor || '#D4AF37', [0.83, 0.69, 0.22]);
+    const bandMaterial = new THREE.MeshStandardMaterial({
       map: strapTexture,
       normalMap: weave,
       normalScale: new THREE.Vector2(0.7, 0.7),
-      roughness: 0.68,
-      sheen: 1,
-      sheenRoughness: 0.42,
-      sheenColor: new THREE.Color(0.32, 0.32, 0.34),
+      roughness: 0.65,
+      metalness: 0.15,
+      color: new THREE.Color().setRGB(strapBaseColor[0], strapBaseColor[1], strapBaseColor[2]),
       side: THREE.DoubleSide
     });
 
@@ -880,9 +900,10 @@ if (foilStrength > 0.0) {
     };
 
     const repaintStrap = () => {
-      tileRatio = paintStrap(strapCanvas, images.strap, parseColor(settings.strapColor, [0.07, 0.07, 0.07]));
+      const strapRgb = parseColor(settings.strapColor, [0.83, 0.69, 0.22]);
+      tileRatio = paintStrap(strapCanvas, images.strap, strapRgb);
       weave.repeat.set(2, 2 * tileRatio);
-      strapTexture.dispose();
+      bandMaterial.color.setRGB(strapRgb[0], strapRgb[1], strapRgb[2]);
       strapTexture.needsUpdate = true;
       start();
     };
@@ -903,7 +924,7 @@ if (foilStrength > 0.0) {
       foilUniforms.foilTop.value.set(0.5, 4.5, 8).normalize().transformDirection(camera.matrixWorldInverse);
       const anchorX = ((ANCHORS[settings.anchor] ?? 0.5) - 0.5) * viewWidth;
       const anchorY = viewHeight / 2 + 0.2;
-      const cardTop = viewHeight / 2 - viewHeight * mix(0.12, 0.42, clamp(settings.strapLength, 0, 1));
+      const cardTop = viewHeight / 2 - viewHeight * mix(0.14, 0.42, clamp(settings.strapLength, 0, 1));
       const hangTop = cardTop + (layout.hangY - layout.height / 2);
       sim.anchor.set(anchorX, anchorY, 0);
       configureSimulation(layout, anchorY - hangTop);
@@ -1150,13 +1171,23 @@ if (foilStrength > 0.0) {
       if (canvas.style.cursor !== value) canvas.style.cursor = value;
     };
 
+    let lastFlipTime = 0;
+    const triggerFlip = point => {
+      const now = performance.now();
+      if (now - lastFlipTime < 320) return;
+      lastFlipTime = now;
+      flip(point || sim.body.position);
+      start();
+    };
+
     const flip = point => {
       const body = sim.body;
+      const hitPoint = point || body.position;
       const up = scratch.a.set(0, 1, 0).applyQuaternion(body.quaternion);
       let direction = sim.turn > 0 ? -1 : 1;
       if (sim.turn === 0) {
-        const away = scratch.c.subVectors(point, camera.position).normalize();
-        direction = scratch.b.subVectors(point, body.position).cross(away).dot(up) < 0 ? -1 : 1;
+        const away = scratch.c.subVectors(hitPoint, camera.position).normalize();
+        direction = scratch.b.subVectors(hitPoint, body.position).cross(away).dot(up) < 0 ? -1 : 1;
       }
       sim.turn = sim.turn === 0 ? Math.PI * direction : 0;
       body.angular.addScaledVector(up, FLIP_SPIN * direction);
@@ -1185,7 +1216,7 @@ if (foilStrength > 0.0) {
       if (!settings.interactive) return;
       toPointer(event);
       if (sim.grab) {
-        if (press && Math.hypot(event.clientX - press.x, event.clientY - press.y) > 6) press = null;
+        if (press && Math.hypot(event.clientX - press.x, event.clientY - press.y) > 20) press = null;
         raycaster.ray.at(sim.grab.reach, sim.grab.target);
         start();
         return;
@@ -1198,7 +1229,7 @@ if (foilStrength > 0.0) {
     const onPointerUp = event => {
       if (!sim.grab) return;
       sim.grab = null;
-      if (press && event.type === 'pointerup' && performance.now() - press.time < 450) flip(press.point);
+      if (press && performance.now() - press.time < 500) triggerFlip(press.point);
       press = null;
       canvas.releasePointerCapture?.(event.pointerId);
       setCursor(hovering && event.pointerType !== 'touch' ? 'grab' : '');
@@ -1211,12 +1242,19 @@ if (foilStrength > 0.0) {
       if (pickCard()) event.preventDefault();
     };
 
+    const onClick = event => {
+      if (!settings.interactive) return;
+      toPointer(event);
+      if (pickCard()) triggerFlip(sim.body.position);
+    };
+
     canvas.addEventListener('pointerdown', onPointerDown);
     canvas.addEventListener('pointermove', onPointerMove);
     canvas.addEventListener('pointerup', onPointerUp);
     canvas.addEventListener('pointercancel', onPointerUp);
     canvas.addEventListener('lostpointercapture', onPointerUp);
     canvas.addEventListener('touchstart', onTouchStart, { passive: false });
+    canvas.addEventListener('click', onClick);
 
     const resize = () => {
       view.width = Math.max(1, container.clientWidth);
@@ -1254,6 +1292,7 @@ if (foilStrength > 0.0) {
         canvas.removeEventListener('pointercancel', onPointerUp);
         canvas.removeEventListener('lostpointercapture', onPointerUp);
         canvas.removeEventListener('touchstart', onTouchStart);
+        canvas.removeEventListener('click', onClick);
         [bodyMesh, frontMesh, backMesh, ring, clampMesh, eyelet, band].forEach(mesh => mesh.geometry?.dispose());
         [frontMaterial, backMaterial, edgeMaterial, metalMaterial, bandMaterial].forEach(material => material.dispose());
         [frontTexture, backTexture, strapTexture, grain, weave].forEach(texture => texture.dispose());
@@ -1268,7 +1307,8 @@ if (foilStrength > 0.0) {
       flip: () => {
         flip(sim.body.position);
         start();
-      }
+      },
+      _debug: { scene, band, bandMaterial, cardGroup, clampGroup, camera, sim, settings }
     };
   }
 

@@ -8,6 +8,27 @@ date_added: 2026-11-05
 
 # Lanyard Interactive 3D Card Effect
 
+> [!IMPORTANT]
+> ### STRICT ARCHITECTURAL & INTERACTION MANDATES FOR LANYARD
+> 1. **STRICT FREEDOM MANDATE (NEVER NEST IN A CARD OR BOX)**:
+>    - **NEVER** place a Lanyard card inside a boxed container, glass card, preview border, or framed card (`background: transparent !important; border: none !important; box-shadow: none !important;`).
+>    - The card must float completely free, borderless, and unconfined across the section canvas.
+> 2. **ATTACHED PHYSICAL RIBBON REQUIRED**:
+>    - The card must **always hang and sway from its physical Three.js Verlet cloth strap ribbon** attached to the top clamp.
+>    - The ribbon must have a rich, high-contrast fabric weave texture with double-edge stitching and cylindrical lighting gradients. Never let the ribbon disappear, become detached, or render as an empty wireframe.
+> 3. **MAXIMUM Z+ VALUE & ALWAYS FORWARD**:
+>    - The card mount and canvas must **ALWAYS have the highest z-index across the section** (`z-index: 9999 !important; overflow: visible !important; pointer-events: none;` with canvas `pointer-events: auto;`).
+>    - In 3D space, the card must be placed forward in positive Z-space (+Z towards the camera) so that both the ribbon and card swing **in front of all backgrounds, panels, and text**, and **NEVER hide behind anything**.
+> 4. **UNCLIPPED CANVAS BOUNDS & BLEED CLEARANCE**:
+>    - A WebGL `<canvas>` cannot rasterize outside its DOM pixel box regardless of CSS `overflow: visible`. Constraining the canvas to a narrow grid column slices off the card when swinging.
+>    - The mount container MUST be given generous negative margin bleed (e.g. `left: -140px; width: calc(100% + 180px); top: -60px; height: calc(100% + 120px);`) so the card swings freely with zero edge clipping.
+> 5. **TAP-TO-FLIP RELIABILITY**:
+>    - Pointer drag threshold must be at least 16–20px so user clicks or taps are not swallowed as drag movements.
+>    - Clicking/tapping the card must reliably trigger a snappy 180° spin flip with strong angular impulse (`FLIP_SPIN: 14`).
+> 6. **THREE.JS r128+ UNIFORM COMPATIBILITY**:
+>    - Never set `sheen: 1` as a scalar on `MeshPhysicalMaterial` — Three.js r128 expects `THREE.Color` and will crash WebGL with `uniform3fv` error on frame 0. Use `THREE.MeshStandardMaterial` for `bandMaterial`.
+>    - Never call `strapTexture.dispose()` inside `repaintStrap()`; simply update canvas and set `strapTexture.needsUpdate = true`.
+
 A GPU-accelerated interactive 3D physics badge and lanyard engine powered by Three.js (originating from React Bits' `Lanyard`). The card hangs from a flexible fabric strap simulated via Position-Based Dynamics (PBD) and Verlet integration. Visitors can drag, stretch, throw, and click the card to flip it over, revealing custom front and back artwork with realistic specular reflections and holographic foil grating.
 
 ---

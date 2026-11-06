@@ -17,7 +17,7 @@
   // =========================================================================
 
   const AudioEngine = {
-    enabled: true,
+    enabled: false, // Strictly silent by default (Zero Audio Policy)
     pool: [],
     poolIdx: 0,
     soundUrl: 'water-drop.wav',
@@ -307,6 +307,12 @@
     if (typeof container === 'string') container = document.querySelector(container);
     if (!container) return null;
 
+    const computedInitial = window.getComputedStyle(container);
+    const resolvedColor = options.color || computedInitial.color || '#FFFFFF';
+    if (!options.imageElement) {
+      container.style.color = 'transparent';
+    }
+
     container.classList.add('warp-fluid-container');
     let canvas = container.querySelector('canvas.warp-fluid-canvas');
     if (!canvas) {
@@ -511,7 +517,7 @@
         } else if (options.color) {
           rasterCtx.fillStyle = options.color;
         } else {
-          rasterCtx.fillStyle = computed.color || '#FFFFFF';
+          rasterCtx.fillStyle = resolvedColor || '#FFFFFF';
         }
 
         if (options.shadowColor) {

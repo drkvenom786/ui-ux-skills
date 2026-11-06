@@ -319,6 +319,23 @@ void main() {
     const state = { spot: 0, level: 0, press: 0, ready: false };
     let visible = true;
 
+    let cachedRect = null;
+    let hasRenderedIdle = false;
+
+    const getRect = () => {
+      if (!cachedRect) {
+        cachedRect = element.getBoundingClientRect();
+      }
+      return cachedRect;
+    };
+
+    const invalidateRect = () => {
+      cachedRect = null;
+    };
+
+    window.addEventListener('scroll', invalidateRect, { passive: true });
+    window.addEventListener('resize', invalidateRect, { passive: true });
+
     const cornerRadius = () => Math.min(s.radius, view.width / 2, view.height / 2);
 
     const restSpot = () => {
@@ -329,13 +346,18 @@ void main() {
 
     const aim = () => {
       if (!s.followMouse || s.disabled || !pointer.known) return null;
-      const rect = element.getBoundingClientRect();
+      const rect = getRect();
       const scale = rect.width / view.width || 1;
       const halfX = view.width / 2;
       const halfY = view.height / 2;
       const x = (pointer.x - rect.left - rect.width / 2) / scale;
       const y = (rect.top + rect.height / 2 - pointer.y) / scale;
       const distance = Math.hypot(Math.max(Math.abs(x) - halfX, 0), Math.max(Math.abs(y) - halfY, 0));
+      
+      if (distance > s.proximity) {
+        return { spot: restSpot(), near: 0 };
+      }
+
       const t = clamp(1 - distance / s.proximity, 0, 1);
       const near = t * t * (3 - 2 * t);
       const nearest = loopPosition(x, y, halfX, halfY, cornerRadius());
@@ -347,10 +369,11 @@ void main() {
     };
 
     const measure = () => {
-      const rect = element.getBoundingClientRect();
+      cachedRect = null;
+      const rect = getRect();
       view.width = Math.max(1, rect.width || element.offsetWidth);
       view.height = Math.max(1, rect.height || element.offsetHeight);
-      view.ratio = Math.min(window.devicePixelRatio || 1, 2.5);
+      view.ratio = Math.min(window.devicePixelRatio || 1, 2);
 
       const targetW = Math.max(1, Math.round((view.width + PAD * 2) * view.ratio));
       const targetH = Math.max(1, Math.round((view.height + PAD * 2) * view.ratio));
@@ -416,13 +439,17 @@ void main() {
         state.spot = restSpot();
         state.level = s.autoAnimate ? 1 : s.idleIntensity;
         state.ready = true;
+        render();
+        hasRenderedIdle = true;
+        return false;
       }
 
       let diff = 0;
       if (spinning && !steering) {
         state.spot = wrap(state.spot + (s.speed / TAU) * dt);
       } else {
-        diff = (steering ? target.spot : restSpot()) - state.spot;
+        const destSpot = (steering ? target.spot : restSpot());
+        diff = destSpot - state.spot;
         diff -= Math.round(diff);
         state.spot = wrap(state.spot + diff * (1 - Math.exp(-dt * 8)));
       }
@@ -431,10 +458,22 @@ void main() {
       state.level += (level - state.level) * (1 - Math.exp(-dt * 7));
       state.press *= Math.exp(-dt * 5);
 
-      render();
+      const settling = Math.abs(diff) > 0.0003 || Math.abs(level - state.level) > 0.001 || state.press > 0.002;
+      const isDynamic = steering || spinning || settling;
 
-      const settling = Math.abs(diff) > 0.0002 || Math.abs(level - state.level) > 0.001 || state.press > 0.002;
-      return settling || (spinning && !steering);
+      if (isDynamic) {
+        render();
+        hasRenderedIdle = false;
+        return true;
+      } else {
+        if (!hasRenderedIdle) {
+          state.spot = restSpot();
+          state.level = s.idleIntensity;
+          render();
+          hasRenderedIdle = true;
+        }
+        return false;
+      }
     };
 
     const onPointerDown = () => {
@@ -486,68 +525,50 @@ void main() {
   function autoInit() {
     // Buttons
     const buttons = document.querySelectorAll(`
-      .cta-button,
-      button,
-      a[href="#contact"].bg-primary,
-      .folder-project-btn,
-      .contact-card a,
+      .specular-button,
+      .btn-gold-crest,
       [data-specular="button"]
     `);
 
     buttons.forEach(btn => {
-      // Determine theme line color
-      let lineColor = '#ffffff';
-      if (btn.classList.contains('bg-primary') || btn.classList.contains('text-primary') || btn.closest('.border-primary')) {
-        lineColor = '#D8B4FE'; // Light purple glow
-      } else if (btn.classList.contains('bg-secondary') || btn.classList.contains('text-secondary') || btn.closest('.border-secondary')) {
-        lineColor = '#86EFAC'; // Light green glow
-      } else if (btn.classList.contains('bg-blue-500') || btn.classList.contains('text-blue-500')) {
-        lineColor = '#93C5FD'; // Light blue glow
-      }
+      let lineColor = btn.getAttribute('data-line-color') || '#D4AF37';
+      const cs = window.getComputedStyle(btn);
+      const computedR = parseFloat(cs.borderRadius);
+      const isPill = cs.borderRadius.includes('9999') || cs.borderRadius.includes('50%');
+      const radius = isPill ? 9999 : (!isNaN(computedR) ? computedR : 12);
 
       attachSpecular(btn, {
+        radius,
         lineColor,
-        baseColor: '#52525b',
-        thickness: 1.2,
-        glow: 1,
-        idleIntensity: 0.32,
-        proximity: 220
+        baseColor: '#2a2215',
+        thickness: 1.4,
+        glow: 1.2,
+        idleIntensity: 0.35,
+        proximity: 200
       });
     });
 
     // Cards
     const cards = document.querySelectorAll(`
-      .stats-grid > div,
-      #services .bg-white\\/\\[0\\.04\\],
-      .contact-card,
-      #contact .bg-card,
+      .specular-card,
       [data-specular="card"]
     `);
 
     cards.forEach(card => {
-      let lineColor = '#ffffff';
-      let radius = 24;
-
-      if (card.classList.contains('rounded-2xl')) radius = 16;
-      else if (card.classList.contains('rounded-3xl')) radius = 24;
-
-      // Card-specific theme accents
-      if (card.innerHTML.includes('text-secondary') || card.innerHTML.includes('fa-whatsapp') || card.innerHTML.includes('text-green-500')) {
-        lineColor = '#86EFAC'; // Emerald glow
-      } else if (card.innerHTML.includes('text-primary') || card.innerHTML.includes('fa-comments') || card.innerHTML.includes('fa-envelope')) {
-        lineColor = '#D8B4FE'; // Purple glow
-      } else if (card.innerHTML.includes('text-blue-500') || card.innerHTML.includes('fa-telegram')) {
-        lineColor = '#93C5FD'; // Blue glow
-      }
+      let lineColor = card.getAttribute('data-line-color') || '#D4AF37';
+      const cs = window.getComputedStyle(card);
+      const computedR = parseFloat(cs.borderRadius);
+      const isPill = cs.borderRadius.includes('9999') || cs.borderRadius.includes('50%');
+      const radius = isPill ? 9999 : (!isNaN(computedR) ? computedR : 20);
 
       attachSpecular(card, {
         radius,
         lineColor,
-        baseColor: '#3f3f46',
-        thickness: 1.4,
-        glow: 1.15,
-        idleIntensity: 0.25,
-        proximity: 320
+        baseColor: '#1c160c',
+        thickness: 1.5,
+        glow: 1.25,
+        idleIntensity: 0.28,
+        proximity: 280
       });
     });
 

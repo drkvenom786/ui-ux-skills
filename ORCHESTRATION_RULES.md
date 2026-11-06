@@ -18,9 +18,14 @@ Always give first priority to the installed interactive skills (`<skill-name>-in
 > [!IMPORTANT]
 > **STRICT BAN ON SINGLE GLOBAL BACKGROUNDS**:
 > - **NEVER create a single background for the whole website**. Each section MUST have its own independent background container/canvas (`.section-bg-mount` / `.section-bg-canvas`), even if using the same color theme. Every section owns its interactive backdrop independently.
-> - **Multi-Color Antigravity Rule**: When using `antigravity-interactive-effect`, **NEVER use a single monochrome color**. Always configure a rich, multi-color harmonized palette (e.g., Sacred Gold `#D4AF37`, Celestial Azure `#3B82F6`, Luminous Emerald `#10B981`, and Imperial Rose `#E11D48`).
-> - **Low Opacity & Small Particle Size Mandate**: When using `antigravity-interactive-effect`, ALWAYS use **very low opacity** (`opacity: 0.22 - 0.35`) and **small, delicate particles** (`particleSize: 0.8 - 1.1`). NEVER use high opacity or large, chunky particles that clutter or distract from content.
-> - **Light Background Rule**: Whenever a page or section uses a light background (ivory, pearl, light parchment), ALWAYS use **`antigravity-interactive-effect`** with multi-colored floating particle dust and magnetic repulsion.
+> - **LiquidEther Background Mandate**: Always support and integrate **`liquid-ether-interactive-effect`** (`liquidether.js` / `<LiquidEther />`) for fluid dynamics interactive backgrounds with Navier-Stokes advection, pressure projection, multi-color gradient palettes, click bursts, and auto-demo swirls. When LiquidEther is used, the main/hero title MUST use **`warp-text-interactive-effect`** (`warptext.js`).
+> - **Antigravity Conditionality Rule (Only Add If Explicitly Asked — NEVER by Default in Light Mode)**:
+>   - **DO NOT add `antigravity-interactive-effect` by default on light backgrounds or in light mode.**
+>   - **ONLY add `antigravity-interactive-effect` if EXPLICITLY REQUESTED by the user.**
+>   - When explicitly asked, it MUST strictly adhere to:
+>     - **Very low opacity** (`opacity: 0.22 - 0.35`).
+>     - **Small, delicate particles** (`particleSize: 0.8 - 1.1`).
+>     - **Multi-color harmonized palette** (e.g., Gold, Azure, Emerald, Rose — never monochrome).
 
 ---
 
@@ -47,7 +52,10 @@ Always give first priority to the installed interactive skills (`<skill-name>-in
 > 1. **IMAGES / PHOTOS / FOLIOS ONLY**: `InfiniteSpiral` is strictly for **image folios and photography**. Never wrap text cards or generic UI widgets into it.
 > 2. **NO INNER CARD NESTING**: NEVER place `InfiniteSpiral` inside an inner card, framed box, or bordered container. It must breathe freely on the section canvas.
 > 3. **NO CENTER PLACEMENT**: NEVER place `InfiniteSpiral` centered alone. It must always be placed asymmetrically in a split layout with narrative text flanking it.
-> 4. **MINIMUM TWO-SECTION SPAN**: NEVER constrain `InfiniteSpiral` to a single isolated section. It MUST span across a **minimum of two consecutive sections** so that as the user scrolls from one section to the next, the 3D cylindrical helix seamlessly links and transitions between both sections.
+> 4. **MINIMUM TWO-SECTION SPAN & CONTINUOUS BRIDGING**:
+>    - NEVER constrain `InfiniteSpiral` to a single isolated section. It MUST span across a **minimum of two consecutive sections** so that as the user scrolls from one section to the next, the 3D cylindrical helix seamlessly links and transitions between both sections.
+>    - **Continuous Right-Flank S-Curve Corridor**: Arrange the unboxed 3D spiral on the right flank as a sweeping vertical S-curve corridor that spans continuously down across both sections. Never block or crowd it with center cards, loupe boxes, or header banners.
+>    - **Sticky Scroll Persistence**: Root layouts must use `overflow-x: clip !important` (rather than `overflow-x: hidden !important`) on `html, body` so that CSS `position: sticky` inside the two-section container flows smoothly relative to the viewport window without breaking sticky boundaries.
 > 5. **FULL INTERACTION MODES (`animationMode: 'all'`)**: NEVER restrict `InfiniteSpiral` to scroll-only. It must always use `animationMode: 'all'` so visitors can auto-spin, pointer-drag, touch-fling, AND scroll through the helix simultaneously.
 
 #### 2. Single Image in Any Section: `warp-text-interactive-effect` (`warpImage`)
@@ -67,7 +75,7 @@ Always give first priority to the installed interactive skills (`<skill-name>-in
 
 | Card Scenario | Required Component | Strict Placement & Architecture Rules |
 |:---|:---|:---|
-| **Single Card in Any Section** | **`lanyard-interactive-effect`** (`lanyard.js`) | Three.js Verlet cloth strap physics, rigid-body card dynamics, holographic iridescent foil shader, and interactive drag/tilt/flip. |
+| **Single Card in Any Section** | **`lanyard-interactive-effect`** (`lanyard.js`) | **STRICT FREEDOM & FORWARD MANDATE**: <br>1. **NEVER nest inside a box or card**. Must float freely and borderlessly on the section canvas (`background: transparent !important; border: none !important; box-shadow: none !important;`).<br>2. **Ribbon Attached**: Card hangs and sways freely from its physical Three.js Verlet cloth strap ribbon.<br>3. **Maximum z+ Value & Always Forward**: Must have the highest z-index across the section (`z-index: 9999 !important; position: relative !important; overflow: visible !important;`) and in 3D space must be placed forward in positive Z-space (+Z towards camera) so the card and ribbon are always in front of all text, backgrounds, and layout elements, and NEVER hide behind anything. |
 | **Few Cards (3–4 Cards in a Section)** | **`folder-interactive-effect`** (`folder.js`) | 3D perspective physics, frosted glass materials, document tab dragging, click-to-zoom expansion, and spring settling. |
 | **Many Cards / Feature Showcases / Catalog Collections (5+ Cards)** | **`card-swap-interactive-effect`** (`CardSwap.jsx` / `cardswap.js`) | **STRICT RULES**: <br>1. **NEVER nest inside another card**.<br>2. **NEVER place in the center**.<br>3. **ALWAYS place on the RIGHT side** with descriptive text/controls on the **LEFT side**.<br>4. **NEVER duplicate with a static card grid underneath**. The swipe card deck IS the showcase.<br>5. Used for catalog collections (e.g. books, folios), feature showcases, departments, and services. |
 | **Cards in the Last Section of Website** | **`laser-flow-interactive-effect`** (`laserflow.js`) | Scroll-triggered volumetric laser beam washes with realistic surface impact. **Laser colors MUST strictly match the website's theme palette.** |
@@ -85,7 +93,7 @@ Always give first priority to the installed interactive skills (`<skill-name>-in
 >     padding: 0 !important;
 >     width: 100% !important;
 >     max-width: 100vw !important;
->     overflow-x: hidden !important;
+>     overflow-x: clip !important;
 >     box-sizing: border-box !important;
 >   }
 >   *, *::before, *::after {
@@ -116,6 +124,8 @@ Always give first priority to the installed interactive skills (`<skill-name>-in
 
 ### G. Specular Lighting, Dock, & Navigation
 - **Specular Lighting & Edge Hover**: ALWAYS use `specular-border-interactive-effect` (`specular.js`, `SpecularButton.css`) for raytraced perimeter borders on primary action buttons and cards.
+  - **Corner Radius Matching Mandate**: Whenever applying border glow or specular border lighting effects, **ALWAYS make sure that the glow line and the border of the element match perfectly at all corners if the element has any `border-radius`**.
+  - **Zero Corner Distortion**: The illuminated glow beam must seamlessly hug the curved corner arcs rather than cutting across or rendering as sharp $90^\circ$ rectangles. Always inherit `parseFloat(window.getComputedStyle(el).borderRadius)` and trace with exact matching `roundRect` or SDF rounded corner arcs. If using CSS pseudo-elements, strictly enforce `border-radius: inherit !important;`.
 - **Application Dock & Launcher**: ALWAYS use `dock-interactive-effect` (`dock.js`, `Dock.css`) with cosine-squared magnification and parabolic click hops.
 - **Navigation Bars**: ALWAYS use `pill-nav-interactive-effect` (`pillnav.js`, `PillNav.css`) with ink-fill rollout and spring gliding pills.
 
@@ -131,16 +141,37 @@ Always give first priority to the installed interactive skills (`<skill-name>-in
 > 
 > UI interactions must be self-evident, discoverable, and intuitive through spatial affordance, cursor cues, and natural micro-interactions. Never explain the interaction through copy.
 >
+> **STRICT BAN ON ROBOTIC HEADLINES, NUMBERED BADGES & SLASH SYNTAX (`//`)**:
+> - **NEVER** use developer section tags or numbered meta-badges above titles like:
+>   - ❌ *"SECTION 01 // ..."*
+>   - ❌ *"SECTION 02 // HISTORIC PRESERVATION"*
+>   - ❌ *"SECTION 03 // EPOCHS OF ENLIGHTENMENT"*
+>   - ❌ *"SECTION 04 // ARCHITECTURAL HABITATS"*
+>   - ❌ *"FOLIO REPOSITORY // ILLUMINATED ARCHIVES"*
+>   - ❌ *"DAILY SANCTUARY ILLUMINATION // حكمة اليوم"*
+>   - ❌ *"WING A // MAIN LEVEL"*
+> - **NEVER** use double-slash syntax (`//`) in titles or subtitles. Use clean, elegant typographic bullets (`•`), em-dashes (`—`), or standalone headlines.
+> - Real titles must stand proud, clean, authentic, and atmospheric without patronizing developer metadata tags.
+>
 > **STRICT BAN ON TECHNICAL BUZZWORDS & META-LABELS**: NEVER use developer labels, animation names, or technical jargon in user-facing UI copy or badges like:
 > - ❌ *"CURATED CODEX STACK // 3D FLING & SWAP PERSPECTIVE"*
 > - ❌ *"MEDIEVAL FOLIO REPOSITORY // SCROLL-LINKED 3D HELIX"*
 > - ❌ *"3D FLING", "SWAP PERSPECTIVE", "3D HELIX", "INTERACTIVE EFFECT"*
 > 
-> All badges, titles, headers, and descriptions must strictly use authentic, atmospheric domain terminology matching the website's thematic purpose (e.g., *"مَيَادِينُ العِلْم // SCHOLARLY DISCIPLINES"*, *"خَزَانَةُ المَخْطُوطَاتِ النَّادِرَة // ILLUMINATED ARCHIVES"*).
+> All titles, headers, and descriptions must strictly use authentic, atmospheric domain terminology matching the website's thematic purpose (e.g., *"مَيَادِينُ العِلْم • SCHOLARLY DISCIPLINES"*, *"خَزَانَةُ المَخْطُوطَاتِ النَّادِرَة • ILLUMINATED ARCHIVES"*).
 
 ---
 
-### I. Zero Browser Alert Policy
+### I. Strict Ban on Emojis (Use Proper SVG Icons Only)
+> [!IMPORTANT]
+> **NEVER USE EMOJIS — ALWAYS USE PROPER SVG ICONS**:
+> - **STRICT BAN ON SYSTEM EMOJIS**: NEVER use emojis (e.g. 🏛️, 🌿, 📜, 🕯️, 📍, ✉️, 🔖, ☀️, 🌙, ✕, etc.) anywhere across a website's user interface, buttons, tabs, navigation items, amenity lists, or status indicators.
+> - System emojis look amateurish, render inconsistently across operating systems (iOS vs Android vs Windows), and destroy brand luxury.
+> - **MANDATORY SVG STANDARD**: ALWAYS use clean, beautifully crafted vector SVG icons (`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">...`) that harmoniously adopt the design system's exact colors, stroke weights, and hover effects.
+
+---
+
+### J. Zero Browser Alert Policy
 > [!CAUTION]
 > **STRICT BAN**: Never call `alert()`, `confirm()`, or `prompt()`.
 > Always use theme-harmonized, beautifully styled floating toast notifications with smooth auto-dismiss animations (`library-toast` / custom toast components).

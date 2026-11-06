@@ -1,16 +1,16 @@
-# UI/UX Design & Interaction Skills 🎨✨
+# UI/UX Design & Interaction Skills
 
 A comprehensive, production-ready repository of **elite design pipelines** and **high-performance interactive UI/UX components** for AI coding agents and frontend engineers.
 
 The repository is structured into two specialized domains:
-- 🎨 [**`design/`**](#-design-skills-design): Strict design pipelines, Awwwards-tier quality gates (from [VibeCurb](https://github.com/Yu-369/VibeCurb)), and the **45 Best Website Color Combinations & WCAG Contrast Design Systems** (inspired by [Onething Design](https://www.onething.design/post/best-colour-combinations-for-websites)).
-- ⚡ [**`interaction/`**](#-interaction-skills-interaction): 22 production-ready, physics-driven interactive UI/UX components inspired by [React Bits](https://reactbits.dev) (React/Next.js + Standalone Vanilla JS).
+- [**`design/`**](#design-skills-design): Strict design pipelines, Awwwards-tier quality gates (from [VibeCurb](https://github.com/Yu-369/VibeCurb)), and the **45 Best Website Color Combinations & WCAG Contrast Design Systems** (inspired by [Onething Design](https://www.onething.design/post/best-colour-combinations-for-websites)).
+- [**`interaction/`**](#interaction-skills-interaction): 22 production-ready, physics-driven interactive UI/UX components inspired by [React Bits](https://reactbits.dev) (React/Next.js + Standalone Vanilla JS).
 
-> ⚡ **[Master Interaction & UI/UX Orchestration Rules](ORCHESTRATION_RULES.md)**: Strict rules for typography-background pairings, light backgrounds (Antigravity), multi-image galleries (InfiniteSpiral), single-image water refraction (WarpText), card counts (Lanyard, Folder, CardSwap, LaserFlow), subheadings calm at rest with click wave only, zero margin spaces across all devices, low natural glow levels, zero browser alerts, and mobile navbar enforcement.
+> **[Master Interaction & UI/UX Orchestration Rules](ORCHESTRATION_RULES.md)**: Strict rules for typography-background pairings, light backgrounds (Antigravity conditionality), multi-image galleries (InfiniteSpiral continuous two-section bridging), single-image water refraction (WarpText), card counts (Lanyard freedom mandate, Folder, CardSwap, LaserFlow in last section), subheadings calm at rest with click wave only, zero margin spaces across all devices, low natural glow levels, zero browser alerts, strict SVG icons (zero emojis), and mobile navbar enforcement.
 
 ---
 
-## 🎨 Design Skills (`design/`)
+## Design Skills (`design/`)
 
 Strict protocols that override average AI generation defaults with real spatial hierarchy, editorial typography, tight palettes, and surgical visual redesigns.
 
@@ -27,7 +27,7 @@ Strict protocols that override average AI generation defaults with real spatial 
 
 ---
 
-## ⚡ Interaction Skills (`interaction/`)
+## Interaction Skills (`interaction/`)
 
 A curated collection of **22 high-performance interactive UI/UX components and visual effects** inspired by [React Bits](https://reactbits.dev).
 
@@ -64,7 +64,7 @@ Every interaction skill includes:
 
 ---
 
-## 📦 Repository Structure
+## Repository Structure
 
 ```
 ui-ux-skills/

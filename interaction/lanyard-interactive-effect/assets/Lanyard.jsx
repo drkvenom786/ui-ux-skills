@@ -829,14 +829,12 @@ const Lanyard = ({
     backMaterial.onBeforeCompile = injectFoil;
     const edgeMaterial = new THREE.MeshPhysicalMaterial();
     const metalMaterial = new THREE.MeshStandardMaterial({ metalness: 1 });
-    const bandMaterial = new THREE.MeshPhysicalMaterial({
+    const bandMaterial = new THREE.MeshStandardMaterial({
       map: strapTexture,
       normalMap: weave,
       normalScale: new THREE.Vector2(0.7, 0.7),
       roughness: 0.68,
-      sheen: 1,
-      sheenRoughness: 0.42,
-      sheenColor: new THREE.Color(0.32, 0.32, 0.34),
+      metalness: 0.05,
       side: THREE.DoubleSide
     });
 
@@ -906,7 +904,6 @@ const Lanyard = ({
       const s = settingsRef.current;
       tileRatio = paintStrap(strapCanvas, images.strap, parseColor(s.strapColor, [0.07, 0.07, 0.07]));
       weave.repeat.set(2, 2 * tileRatio);
-      strapTexture.dispose();
       strapTexture.needsUpdate = true;
       start();
     };

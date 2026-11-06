@@ -8,6 +8,14 @@ date_added: 2026-11-04
 
 # Specular Border & Button Interactive Effect
 
+> [!IMPORTANT]
+> ### CORNER RADIUS MATCHING MANDATE
+> Whenever applying specular border or glow effects:
+> - **The glow line and the border of the element MUST match perfectly at all corners** if the element has any `border-radius`.
+> - **Zero Corner Clipping or Angular Distortion**: The specular beam must smoothly hug the rounded corner arcs without rendering sharp $90^\circ$ corners or cutting into the interior.
+> - **Automatic CSS Radius Inheritance**: The engine automatically inspects `window.getComputedStyle(element).borderRadius` and converts it to physical canvas coordinates (`parseFloat(cs.borderRadius)` or `9999` for pills/circles). Never force an arbitrary hardcoded corner radius that mismatches the element's actual CSS.
+> - If styling via pseudo-elements or CSS outlines, always enforce `border-radius: inherit !important;`.
+
 A GPU-accelerated specular rim lighting engine (originating from React Bits' `SpecularButton`) that traces a realistic ray-marched specular highlight along the perimeter of buttons, cards, and containers. The highlight actively steers toward the user's cursor as it approaches, expands on click/press, and smoothly rests at an ambient glint when idle.
 
 ---

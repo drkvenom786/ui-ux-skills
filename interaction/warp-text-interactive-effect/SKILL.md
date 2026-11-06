@@ -11,6 +11,13 @@ date_added: 2026-11-04
 A GPU-accelerated interactive WebGL2 fluid refraction system. Renders headings, multi-line paragraph descriptions, and images through an interactive optical water simulation with zero external runtime dependencies.
 
 > [!IMPORTANT]
+> **Zero Audio & Production Integrity Mandates:**
+> 1. **Zero Audio Policy**: By default, web audio MUST be disabled (`audio: false`, `soundEnabled: false`). Never play sound effects unless explicitly instructed by the user.
+> 2. **Ghost Text Elimination**: When mounting on an existing DOM text element (e.g., `<p>`, `<h2>`), the original DOM text must have `container.style.color = 'transparent'` to preserve accurate layout bounding dimensions while preventing duplicate/ghost text underlays behind the WebGL canvas.
+> 3. **Calm at Rest for Descriptions & Subheadings**: Descriptions and subheadings must NOT be constantly destructive or violently agitated; use `clickWaveOnly: true` or subtle displacement so text remains crisp, calm, and readable at rest.
+> 4. **Font Size Preservation**: ALWAYS inspect and strictly preserve the element's computed CSS font size (`window.getComputedStyle(el).fontSize`). Never let WebGL text render smaller than the design system scale.
+
+> [!NOTE]
 > **Scope & Modular Architecture:**
 > Full-website underwater distortion, full-page SVG turbulence filters, and full-screen underwater canvas overlays are **deliberately excluded** from this skill.
 > This skill focuses strictly on three modular, self-contained interactive components:
