@@ -1,6 +1,6 @@
 # UI/UX Interactive Skills 🎨✨
 
-A curated, production-ready collection of **20 high-performance interactive UI/UX components and visual effects** inspired by [React Bits](https://reactbits.dev).
+A curated, production-ready collection of **21 high-performance interactive UI/UX components and visual effects** inspired by [React Bits](https://reactbits.dev).
 
 Every skill in this repository is completely self-contained with:
 1. **`SKILL.md`**: Complete documentation, mathematical physics formulations, props API tables, integration patterns, and accessibility guidelines.
@@ -25,6 +25,7 @@ Every skill in this repository is completely self-contained with:
 | [**GlitchText**](skills/glitch-text-interactive-effect/) | Typography Effects | Procedural Canvas Tearing, RGB Shadows | `GlitchText.jsx` | `glitchtext.js` | Multi-mode glitch typography (slices, scanlines, rgb split, noise) with animated gradient flow. |
 | [**GlowCursor**](skills/glow-cursor-interactive-effect/) | Cursors & Trails | WebGL2 Fluid Navier-Stokes, 5-Level Bloom | `GlowCursor.jsx` | `glowcursor.js` | Fluid advection light trails, MacCormack advection, and click burst shockwaves. |
 | [**GooeyNav**](skills/gooey-nav-interactive-effect/) | Navigation | WebGL2 SDF Metaballs, Cubic Bézier | `GooeyNav.jsx` | `gooeynav.js` | Liquid metaball navigation bar with spring wobble physics and dual-layer inverted text clip paths. |
+| [**InfiniteSpiral**](skills/infinite-spiral-interactive-effect/) | 3D Galleries & Carousels | 3D Cylindrical Helix, Smoothstep Depth Blur | `InfiniteSpiral.jsx` | `infinite-spiral.js` | 3D infinite helical card gallery with distance blur, dynamic scale, and multi-mode scroll/drag navigation. |
 | [**Lanyard**](skills/lanyard-interactive-effect/) | 3D Physics | Three.js, Verlet Cloth, Rigid Body | `Lanyard.jsx` | `lanyard.js` | Interactive 3D lanyard ID card with Verlet cloth strap mechanics and holographic foil shaders. |
 | [**LaserFlow**](skills/laser-flow-interactive-effect/) | Volumetric Lighting | WebGL2, Ray-Sphere Impacts, Edge Washes | `LaserFlow.jsx` | `laserflow.js` | Volumetric laser beam with realistic surface impact washes and atmospheric dust particles. |
 | [**LiquidEther**](skills/liquid-ether-interactive-effect/) | Fluid Dynamics | WebGL2 Navier-Stokes, Pressure Projection | `LiquidEther.jsx` | `liquidether.js` | Organic multi-color fluid dynamics background with click bursts and glassmorphic layers. |
@@ -55,6 +56,7 @@ ui-ux-skills/
     ├── glitch-text-interactive-effect/
     ├── glow-cursor-interactive-effect/
     ├── gooey-nav-interactive-effect/
+    ├── infinite-spiral-interactive-effect/
     ├── lanyard-interactive-effect/
     ├── laser-flow-interactive-effect/
     ├── liquid-ether-interactive-effect/
