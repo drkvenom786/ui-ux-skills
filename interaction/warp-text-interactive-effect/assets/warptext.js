@@ -455,14 +455,23 @@
         // ==========================================
         const computed = window.getComputedStyle(container);
         const text = options.text || container.getAttribute('data-text') || container.textContent || '';
-        const fontFamily = options.fontFamily || computed.fontFamily || 'Poppins, sans-serif';
-        const fontWeight = options.fontWeight || computed.fontWeight || '700';
-        let fontSizePx = options.fontSize
-          ? parseFloat(options.fontSize)
-          : parseFloat(computed.fontSize) || 48;
+        const fontFamily = options.fontFamily || computed.fontFamily || 'Cinzel, serif';
+        const fontWeight = options.fontWeight || computed.fontWeight || '600';
+        
+        // Strict preservation of original computed font size
+        let fontSizePx;
+        if (typeof options.fontSize === 'number') {
+          fontSizePx = options.fontSize;
+        } else if (typeof options.fontSize === 'string' && /^\d+(\.\d+)?px$/.test(options.fontSize.trim())) {
+          fontSizePx = parseFloat(options.fontSize);
+        } else {
+          fontSizePx = parseFloat(computed.fontSize);
+          if (!Number.isFinite(fontSizePx) || fontSizePx <= 0) fontSizePx = 18;
+        }
+
         let letterSpacing = computed.letterSpacing === 'normal' ? 0 : parseFloat(computed.letterSpacing) || 0;
         let lineHeight = parseFloat(computed.lineHeight);
-        if (!Number.isFinite(lineHeight)) lineHeight = fontSizePx * 1.25;
+        if (!Number.isFinite(lineHeight) || lineHeight <= fontSizePx) lineHeight = fontSizePx * 1.35;
 
         rasterCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
         rasterCtx.clearRect(0, 0, width, height);
@@ -514,13 +523,21 @@
         const maxHeight = height * 0.95;
         const widest = Math.max(...lines.map(line => measureLine(rasterCtx, line, letterSpacing)), 1);
         const blockHeight = Math.max(lineHeight * lines.length, 1);
-        const fit = Math.min(1, maxWidth / widest, maxHeight / blockHeight);
+        
+        // Only shrink if explicitly requested; otherwise respect the true original font size
+        if (options.shrinkToFit && options.singleLine) {
+          const fit = Math.min(1, maxWidth / widest, maxHeight / blockHeight);
+          if (fit < 1) {
+            fontSizePx *= fit;
+            letterSpacing *= fit;
+            lineHeight *= fit;
+            rasterCtx.font = `${fontWeight} ${fontSizePx}px ${fontFamily}`;
+          }
+        }
 
-        if (fit < 1 && options.singleLine) {
-          fontSizePx *= fit;
-          letterSpacing *= fit;
-          lineHeight *= fit;
-          rasterCtx.font = `${fontWeight} ${fontSizePx}px ${fontFamily}`;
+        // Auto-expand container if block height exceeds container height
+        if (blockHeight > height && container.style) {
+          container.style.minHeight = `${Math.ceil(blockHeight + 16)}px`;
         }
 
         const startY = height / 2 - (lineHeight * (lines.length - 1)) / 2;

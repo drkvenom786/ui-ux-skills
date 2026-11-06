@@ -30,7 +30,11 @@ Always give first priority to the installed interactive skills (`<skill-name>-in
 | **Big Hero Heading** | `liquid-ether-interactive-effect` | **`warp-text-interactive-effect`** | Fluid wave undulation | Refraction wake & click dispersion |
 | **Big Hero Heading** | `antigravity-interactive-effect` | **`particle-text-interactive-effect`** | Multi-color particle alignment | Proximity scatter & orbital return |
 | **Subheadings & Secondary Titles** | Any | **`warp-text-interactive-effect`** | **CALM AT REST (Never destructive)** | **Click/tap wave only** (`clickWaveOnly: true`) |
-| **Multi-Line Descriptions (2+ lines)** | Any | **`warp-text-interactive-effect`** | **CALM AT REST (Never destructive)** | Subtle water ripple on hover/click |
+| **Multi-Line Descriptions (2+ lines)** | Any | **`warp-text-interactive-effect`** | **CALM AT REST (Never destructive)** | Subtle water ripple on hover/click (Always preserve original computed font size) |
+
+#### WarpText Font Size Preservation Mandate
+- When applying `warp-text-interactive-effect` (`warptext.js` / `<WarpText />`), **ALWAYS check and preserve the element's original computed font size** (`window.getComputedStyle(el).fontSize`).
+- Never allow the canvas or WebGL rasterizer to artificially downscale or shrink typography below its original CSS scale. Typography must remain crisp and at full designed proportions.
 
 ---
 
@@ -109,15 +113,22 @@ Always give first priority to the installed interactive skills (`<skill-name>-in
 
 ---
 
-### H. Tone & Copywriting Ban (Never Highlight Interactions)
+### H. Tone & Copywriting Ban (Never Highlight Interactions or Use Technical Labels)
 > [!IMPORTANT]
-> **STRICT BAN**: NEVER use patronizing instructions or explanatory sentences like:
+> **STRICT BAN ON INSTRUCTIONAL TEXT**: NEVER use patronizing instructions or explanatory sentences like:
 > - ❌ *"Click and drag to rotate"*
 > - ❌ *"Hover over this card to interact"*
 > - ❌ *"Click here to view animation"*
 > - ❌ *"Drag the items around"*
 > 
 > UI interactions must be self-evident, discoverable, and intuitive through spatial affordance, cursor cues, and natural micro-interactions. Never explain the interaction through copy.
+>
+> **STRICT BAN ON TECHNICAL BUZZWORDS & META-LABELS**: NEVER use developer labels, animation names, or technical jargon in user-facing UI copy or badges like:
+> - ❌ *"CURATED CODEX STACK // 3D FLING & SWAP PERSPECTIVE"*
+> - ❌ *"MEDIEVAL FOLIO REPOSITORY // SCROLL-LINKED 3D HELIX"*
+> - ❌ *"3D FLING", "SWAP PERSPECTIVE", "3D HELIX", "INTERACTIVE EFFECT"*
+> 
+> All badges, titles, headers, and descriptions must strictly use authentic, atmospheric domain terminology matching the website's thematic purpose (e.g., *"مَيَادِينُ العِلْم // SCHOLARLY DISCIPLINES"*, *"خَزَانَةُ المَخْطُوطَاتِ النَّادِرَة // ILLUMINATED ARCHIVES"*).
 
 ---
 
