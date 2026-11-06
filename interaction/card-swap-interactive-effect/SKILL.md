@@ -134,9 +134,17 @@ export default function StackSection() {
 
 ## 6. Interaction Orchestration Mandate
 
+- **Strict Ban on Excessive Cards & Card Clutter**:
+  - Never clutter websites with dozens of boxed cards or static card grids. Keep websites open, spacious, and beautiful across clean editorial sections.
+  - When a collection of 5+ items is displayed (e.g. catalog books, service offerings, or feature decks), **DO NOT render a repetitive static card grid**. Use `card-swap-interactive-effect` to present the entire collection cleanly without vertical bloat or card clutter.
 - **Card Architecture Rule**:
   - **Single Card**: `lanyard-interactive-effect` (Verlet strap 3D badge).
   - **Few Cards (3–4 Cards)**: `folder-interactive-effect` (Frosted glass 3D tabs).
   - **Many Cards / Stacked Deck (5+ Cards or when Folder is not suitable)**: **`card-swap-interactive-effect`** (`CardSwap`).
   - **Last Section Card**: `laser-flow-interactive-effect` with scroll trigger.
+- **CardSwap Layout & Placement Rules**:
+  - **NEVER nest inside another card**: CardSwap must NEVER be wrapped inside another card, `.specular-card`, or border box.
+  - **NEVER place in the center**: CardSwap must NEVER be centered.
+  - **ALWAYS place on the RIGHT side** with descriptive narrative text, search controls, or category tabs on the **LEFT side**.
+  - **NEVER duplicate with a static card grid underneath**: The swipe card deck IS the collection showcase.
 - **Copywriting**: Never write instructional sentences ("Click and drag to swap", "Fling the card"). The tactile stack affordance is self-evident.

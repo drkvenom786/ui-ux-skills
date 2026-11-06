@@ -239,3 +239,18 @@ export default function GalleryPage() {
    - Detects `(prefers-reduced-motion: reduce)` and disables continuous auto-spin, allowing comfortable manual drag or scroll interaction.
 3. **Semantic List Structure**:
    - Container implements `role="list" aria-label="Infinite spiral gallery"`, and each card applies `role="listitem" aria-label="..."`.
+
+---
+
+## 8. Strict Architectural & Placement Mandates
+
+1. **IMAGES ONLY**:
+   - `InfiniteSpiral` is strictly for **image galleries, manuscripts, folios, and photographic works**. Never use it for arbitrary text cards or generic UI widgets.
+2. **NO INNER CARD WRAPPER / CONTAINER**:
+   - NEVER place `InfiniteSpiral` inside an inner card, framed box, or bordered `.specular-card` container. The 3D spiral must float freely and borderlessly on the section canvas.
+3. **NO CENTER PLACEMENT**:
+   - NEVER place `InfiniteSpiral` centered alone. It must always be placed asymmetrically in a split layout with narrative text flanking it.
+4. **MINIMUM TWO-SECTION SPAN**:
+   - NEVER constrain `InfiniteSpiral` to a single isolated section. It MUST span across a **minimum of two consecutive sections** so that scrolling between sections creates a continuous, seamless 3D transition.
+5. **FULL INTERACTION MODES (`animationMode: 'all'`)**:
+   - NEVER restrict `InfiniteSpiral` to scroll-only. It must always use `animationMode: 'all'` so visitors can auto-spin, pointer-drag, touch-fling, AND scroll through the helix simultaneously.

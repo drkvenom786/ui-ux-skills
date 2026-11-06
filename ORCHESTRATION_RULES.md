@@ -19,6 +19,7 @@ Always give first priority to the installed interactive skills (`<skill-name>-in
 > **STRICT BAN ON SINGLE GLOBAL BACKGROUNDS**:
 > - **NEVER create a single background for the whole website**. Each section MUST have its own independent background container/canvas (`.section-bg-mount` / `.section-bg-canvas`), even if using the same color theme. Every section owns its interactive backdrop independently.
 > - **Multi-Color Antigravity Rule**: When using `antigravity-interactive-effect`, **NEVER use a single monochrome color**. Always configure a rich, multi-color harmonized palette (e.g., Sacred Gold `#D4AF37`, Celestial Azure `#3B82F6`, Luminous Emerald `#10B981`, and Imperial Rose `#E11D48`).
+> - **Low Opacity & Small Particle Size Mandate**: When using `antigravity-interactive-effect`, ALWAYS use **very low opacity** (`opacity: 0.22 - 0.35`) and **small, delicate particles** (`particleSize: 0.8 - 1.1`). NEVER use high opacity or large, chunky particles that clutter or distract from content.
 > - **Light Background Rule**: Whenever a page or section uses a light background (ivory, pearl, light parchment), ALWAYS use **`antigravity-interactive-effect`** with multi-colored floating particle dust and magnetic repulsion.
 
 ---
@@ -43,10 +44,11 @@ Always give first priority to the installed interactive skills (`<skill-name>-in
 #### 1. Multi-Photo Galleries: `infinite-spiral-interactive-effect`
 > [!IMPORTANT]
 > **INFINITE SPIRAL PLACEMENT & DURATION RULES**:
-> 1. **NO INNER CARD NESTING**: NEVER place `InfiniteSpiral` inside an inner card or framed card box. It must breathe freely on the section canvas.
-> 2. **NO CENTER PLACEMENT**: NEVER place `InfiniteSpiral` centered alone. It must always be placed asymmetrically in a split layout with narrative text flanking it.
-> 3. **MINIMUM TWO-SECTION SPAN**: NEVER constrain `InfiniteSpiral` to a single isolated section. It MUST span across a **minimum of two consecutive sections** so that as the user scrolls from one section to the next, the 3D cylindrical helix seamlessly links and transitions between both sections.
-> 4. **FULL INTERACTION MODES (`animationMode: 'all'`)**: NEVER restrict `InfiniteSpiral` to scroll-only. It must always use `animationMode: 'all'` so visitors can auto-spin, pointer-drag, touch-fling, AND scroll through the helix simultaneously.
+> 1. **IMAGES / PHOTOS / FOLIOS ONLY**: `InfiniteSpiral` is strictly for **image folios and photography**. Never wrap text cards or generic UI widgets into it.
+> 2. **NO INNER CARD NESTING**: NEVER place `InfiniteSpiral` inside an inner card, framed box, or bordered container. It must breathe freely on the section canvas.
+> 3. **NO CENTER PLACEMENT**: NEVER place `InfiniteSpiral` centered alone. It must always be placed asymmetrically in a split layout with narrative text flanking it.
+> 4. **MINIMUM TWO-SECTION SPAN**: NEVER constrain `InfiniteSpiral` to a single isolated section. It MUST span across a **minimum of two consecutive sections** so that as the user scrolls from one section to the next, the 3D cylindrical helix seamlessly links and transitions between both sections.
+> 5. **FULL INTERACTION MODES (`animationMode: 'all'`)**: NEVER restrict `InfiniteSpiral` to scroll-only. It must always use `animationMode: 'all'` so visitors can auto-spin, pointer-drag, touch-fling, AND scroll through the helix simultaneously.
 
 #### 2. Single Image in Any Section: `warp-text-interactive-effect` (`warpImage`)
 - Must use image liquid wave mode (`warpImage`).
@@ -55,13 +57,19 @@ Always give first priority to the installed interactive skills (`<skill-name>-in
 
 ---
 
-### D. Card Architecture & Count Rules
+### D. Card Architecture & Count Rules (Strict Ban on Excessive Cards)
+
+> [!WARNING]
+> **STRICT BAN ON CARD CLUTTER & TOO MANY CARDS**:
+> - Never create too many cards across a website. Do not box every section, form, instrument, or paragraph inside cards or `.specular-card` containers.
+> - Structure websites as open, spacious, breathing, beautiful editorial sections (`sections of website to make it more beautiful`) rather than repetitive card walls or grids.
+> - **Smart Selection Gate**: If content genuinely requires cards, **NEVER simply add a static card or generic card grid**. Check and apply the exact matching interaction:
 
 | Card Scenario | Required Component | Strict Placement & Architecture Rules |
 |:---|:---|:---|
 | **Single Card in Any Section** | **`lanyard-interactive-effect`** (`lanyard.js`) | Three.js Verlet cloth strap physics, rigid-body card dynamics, holographic iridescent foil shader, and interactive drag/tilt/flip. |
 | **Few Cards (3–4 Cards in a Section)** | **`folder-interactive-effect`** (`folder.js`) | 3D perspective physics, frosted glass materials, document tab dragging, click-to-zoom expansion, and spring settling. |
-| **Many Cards / Features / Services (5+ Cards)** | **`card-swap-interactive-effect`** (`CardSwap.jsx` / `cardswap.js`) | **STRICT RULES**: <br>1. **NEVER nest inside another card**.<br>2. **NEVER place in the center**.<br>3. **ALWAYS place on the RIGHT side** with descriptive feature/service text on the **LEFT side**.<br>4. Used for services, features, and disciplines. |
+| **Many Cards / Feature Showcases / Catalog Collections (5+ Cards)** | **`card-swap-interactive-effect`** (`CardSwap.jsx` / `cardswap.js`) | **STRICT RULES**: <br>1. **NEVER nest inside another card**.<br>2. **NEVER place in the center**.<br>3. **ALWAYS place on the RIGHT side** with descriptive text/controls on the **LEFT side**.<br>4. **NEVER duplicate with a static card grid underneath**. The swipe card deck IS the showcase.<br>5. Used for catalog collections (e.g. books, folios), feature showcases, departments, and services. |
 | **Cards in the Last Section of Website** | **`laser-flow-interactive-effect`** (`laserflow.js`) | Scroll-triggered volumetric laser beam washes with realistic surface impact. **Laser colors MUST strictly match the website's theme palette.** |
 
 ---
@@ -165,3 +173,17 @@ Always give first priority to the installed interactive skills (`<skill-name>-in
 2. **Layout Measurement Caching**: Cache `getBoundingClientRect()` measurements and invalidate only on `resize` and `scroll` events to prevent forced synchronous layout reflows.
 3. **Rest-State Culling**: Never execute WebGL redraw passes on static resting elements. Only render elements actively in cursor proximity or undergoing dynamic motion.
 4. **Context Deduplication**: Never instantiate duplicate component instances or spawn multiple overlapping `requestAnimationFrame` loops.
+
+---
+
+### M. Dark & Light Mode High-Contrast Mandate
+> [!IMPORTANT]
+> **STRICT BAN ON LOW CONTRAST IN LIGHT MODE**:
+> - When a website implements dark and light modes, ALWAYS strictly enforce high visual contrast for all elements, text, and interactive controls in light mode.
+> - There must **NEVER be light-on-light, washed-out text, or matching text and background colors**.
+> - In light mode:
+>   - Background is light (ivory, pearl, light parchment, `#faf7ee`).
+>   - Body text must be deep high-contrast ink (`#1e1913`, `#12151a`) with WCAG AAA contrast ratio ($\ge 7:1$).
+>   - Headings, titles, and author lines must be bold, dark, and prominent.
+>   - Subtitles, metadata, and labels must be crisp charcoal/slate (`#4a4031`, `#374151`), never faint beige.
+>   - Interactive buttons, tabs, inputs, and controls must have distinct high-contrast borders and clear focus/hover indicators.
