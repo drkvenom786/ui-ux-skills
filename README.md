@@ -1,50 +1,84 @@
-# UI/UX Interactive Skills 🎨✨
+# UI/UX Design & Interaction Skills 🎨✨
 
-A curated, production-ready collection of **21 high-performance interactive UI/UX components and visual effects** inspired by [React Bits](https://reactbits.dev).
+A comprehensive, production-ready repository of **elite design pipelines** and **high-performance interactive UI/UX components** for AI coding agents and frontend engineers.
 
-Every skill in this repository is completely self-contained with:
-1. **`SKILL.md`**: Complete documentation, mathematical physics formulations, props API tables, integration patterns, and accessibility guidelines.
-2. **React / Next.js Component (`assets/*.jsx`)**: Fully typed, SSR-safe (`'use client'`) components.
-3. **Dedicated Stylesheet (`assets/*.css`)**: Modular, scoped CSS with customizable CSS custom properties.
-4. **Standalone Vanilla JS Engine (`assets/*.js`)**: Zero-dependency UMD modules (`Class.init(container, options)` or `new Class(...)`) that run anywhere without React, bundlers, or external dependencies.
+The repository is structured into two specialized domains:
+- 🎨 [**`design/`**](#-design-skills-design): Strict design pipelines, Awwwards-tier quality gates (from [VibeCurb](https://github.com/Yu-369/VibeCurb)), and the **45 Best Website Color Combinations & WCAG Contrast Design Systems** (inspired by [Onething Design](https://www.onething.design/post/best-colour-combinations-for-websites)).
+- ⚡ [**`interaction/`**](#-interaction-skills-interaction): 21 production-ready, physics-driven interactive UI/UX components inspired by [React Bits](https://reactbits.dev) (React/Next.js + Standalone Vanilla JS).
 
 ---
 
-## 🚀 Interactive Skills Catalog
+## 🎨 Design Skills (`design/`)
 
-| Skill Name | Category | Technology / Physics | React Component | Vanilla JS Engine | Description |
-|:---|:---|:---|:---|:---|:---|
-| [**Antigravity**](skills/antigravity-interactive-effect/) | Particles & Fields | WebGL2, Instanced Geometry, Oklab | `Antigravity.jsx` | `antigravity.js` | Magnetic particle ring and field distortion with harmonic waves and orbital drift. |
-| [**Ballpit**](skills/ballpit-interactive-effect/) | 3D Physics Simulation | WebGL2 Raymarching, Spatial Hash, PBR | `Ballpit.jsx` | `ballpit.js` | 3D bouncing spheres with collision physics, cursor repulsion, grab, and burst shockwaves. |
-| [**Dock**](skills/dock-interactive-effect/) | Navigation & Menus | Sub-stepped Euler Spring, SVG Pathing | `Dock.jsx` | `dock.js` | macOS-style app dock with spring magnification, hop bounce, badges, and SVG-tailed context menus. |
-| [**DodgeField**](skills/dodge-field-interactive-effect/) | Micro-Interactions | Repulsion Vectors, Exponential Falloff | `DodgeField.jsx` | `dodge-field.js` | Evasive "catch-me" button with boundary clamping/bouncing, patience limits, and taunts. |
-| [**DotField**](skills/dotfield-interactive-effect/) | Particle Grids | WebGL2, Lens Warping, OKLab Blending | `DotField.jsx` | `dotfield.js` | Interactive particle grid with cursor lens magnification, wave undulation, and frosted cards. |
-| [**ElasticMesh**](skills/elastic-mesh-interactive-effect/) | 3D Typography | WebGL2, SDF Poisson Solver, 480Hz Spring | `ElasticMesh.jsx` | `elastic-mesh.js` | Inflated squishy 3D text & logos with 4 PBR materials (balloon, chrome, jelly, clay) and poke physics. |
-| [**FallingText**](skills/falling-text-interactive-effect/) | Typography & Physics | Matter.js 2D Rigid-Body Dynamics | `FallingText.jsx` | `fallingtext.js` | Kinetic typography that crumbles on contact, tumbles under gravity, and springs back home. |
-| [**Folder**](skills/folder-interactive-effect/) | 3D & Containers | CSS 3D Transforms, Perspective Physics | `Folder.jsx` | `folder.js` | Interactive 3D folder component with flap/book modes, document dragging, and click-to-zoom. |
-| [**GlitchText**](skills/glitch-text-interactive-effect/) | Typography Effects | Procedural Canvas Tearing, RGB Shadows | `GlitchText.jsx` | `glitchtext.js` | Multi-mode glitch typography (slices, scanlines, rgb split, noise) with animated gradient flow. |
-| [**GlowCursor**](skills/glow-cursor-interactive-effect/) | Cursors & Trails | WebGL2 Fluid Navier-Stokes, 5-Level Bloom | `GlowCursor.jsx` | `glowcursor.js` | Fluid advection light trails, MacCormack advection, and click burst shockwaves. |
-| [**GooeyNav**](skills/gooey-nav-interactive-effect/) | Navigation | WebGL2 SDF Metaballs, Cubic Bézier | `GooeyNav.jsx` | `gooeynav.js` | Liquid metaball navigation bar with spring wobble physics and dual-layer inverted text clip paths. |
-| [**InfiniteSpiral**](skills/infinite-spiral-interactive-effect/) | 3D Galleries & Carousels | 3D Cylindrical Helix, Smoothstep Depth Blur | `InfiniteSpiral.jsx` | `infinite-spiral.js` | 3D infinite helical card gallery with distance blur, dynamic scale, and multi-mode scroll/drag navigation. |
-| [**Lanyard**](skills/lanyard-interactive-effect/) | 3D Physics | Three.js, Verlet Cloth, Rigid Body | `Lanyard.jsx` | `lanyard.js` | Interactive 3D lanyard ID card with Verlet cloth strap mechanics and holographic foil shaders. |
-| [**LaserFlow**](skills/laser-flow-interactive-effect/) | Volumetric Lighting | WebGL2, Ray-Sphere Impacts, Edge Washes | `LaserFlow.jsx` | `laserflow.js` | Volumetric laser beam with realistic surface impact washes and atmospheric dust particles. |
-| [**LiquidEther**](skills/liquid-ether-interactive-effect/) | Fluid Dynamics | WebGL2 Navier-Stokes, Pressure Projection | `LiquidEther.jsx` | `liquidether.js` | Organic multi-color fluid dynamics background with click bursts and glassmorphic layers. |
-| [**ParticleText**](skills/particle-text-interactive-effect/) | Typography & Particles | HTML5 2D Canvas, Staggered Intro | `ParticleText.jsx` | `particletext.js` | Motion-reactive particle text with 4 intro choreographies (gather, rain, spiral, scan). |
-| [**PillNav**](skills/pill-nav-interactive-effect/) | Navigation | Spring Dynamics, SVG Ink-Fill, ResizeObserver | `PillNav.jsx` | `pillnav.js` | Floating capsule navbar with circular ink rollouts, sliding dot indicator, and morphing mobile drawer. |
-| [**SlingButton**](skills/sling-button-interactive-effect/) | Buttons & Feedback | Tangent Catenary Band, Recoil Spring | `SlingButton.jsx` | `sling-button.js` | Elastic pull-to-send slingshot button with armed power arc and directional particle burst. |
-| [**SpecularBorder**](skills/specular-border-interactive-effect/) | Buttons & Borders | WebGL2, Edge Ray-Tracing, Glassmorphism | `SpecularButton.jsx` | `specular.js` | Dynamic perimeter specular border ray reflection that tracks cursor proximity in real time. |
-| [**SplashCursor**](skills/splash-cursor-interactive-effect/) | Cursors & Fluids | WebGL2 Navier-Stokes, Multi-Pass Bloom | `SplashCursor.jsx` | `splashcursor.js` | High-viscosity ink splashes, vorticity confinement, and rainbow fluid cursor trails. |
-| [**WarpText**](skills/warp-text-interactive-effect/) | Typography & Optics | WebGL2 Refraction, Chromatic Dispersion | `WarpText.jsx` | `warptext.js` | Fluid optical glass refraction, ambient wave undulations, and cursor shockwave ripples. |
+Strict protocols that override average AI generation defaults with real spatial hierarchy, editorial typography, tight palettes, and surgical visual redesigns.
+
+| Skill | Category | Source / Foundation | Description |
+|:---|:---|:---|:---|
+| [**`awwwards-hero`**](design/awwwards-hero/) | Frontend | VibeCurb | Hero section pipeline for award-winning heroes: viewport-scale type, single focal point, extreme whitespace. |
+| [**`awwwards-motion`**](design/awwwards-motion/) | Animations | VibeCurb | Apple/Awwwards-tier motion choreography, scroll reveals, kinetic typography, and fluid micro-interactions. |
+| [**`awwwards-sections`**](design/awwwards-sections/) | Frontend | VibeCurb | Below-the-fold sections pipeline: bento grids, pricing cards, feature showcases, and footers with zero slop. |
+| [**`brandkit-gen`**](design/brandkit-gen/) | Identity | VibeCurb | Identity-studio-grade brand boards, logo concepts, and brand guidelines decks with 8-phase quality gates. |
+| [**`imagegen-frontend`**](design/imagegen-frontend/) | Art Direction | VibeCurb | Elite frontend image direction for generating implementation-friendly website section reference visuals. |
+| [**`pixel-perfect`**](design/pixel-perfect/) | Image-to-Code | VibeCurb | Exact design replica pipeline across 7 layers (grid, type, color, spacing, components, atmosphere, interaction). |
+| [**`visual-redesign`**](design/visual-redesign/) | Redesign | VibeCurb | Surgical aesthetic upgrade for existing React code without breaking functional business logic or state. |
+| [**`website-color-combinations`**](design/website-color-combinations/) | Color Systems | Onething Design 2026 | 45 battle-tested palettes across 9 styles, WCAG 4.5:1 / 3:1 contrast auditing, 60-30-10 distribution, and tokens. |
 
 ---
 
-## 📦 Directory Structure
+## ⚡ Interaction Skills (`interaction/`)
+
+A curated collection of **21 high-performance interactive UI/UX components and visual effects** inspired by [React Bits](https://reactbits.dev).
+
+Every interaction skill includes:
+1. **`SKILL.md`**: Mathematical formulations, props API table, and integration guides.
+2. **React Component (`assets/*.jsx`)**: Fully typed, SSR-safe (`'use client'`).
+3. **Stylesheet (`assets/*.css`)**: Scoped CSS with customizable custom properties.
+4. **Vanilla JS Engine (`assets/*.js`)**: Zero-dependency UMD module (`Class.init(...)`).
+
+| Component Name | Category | Technology / Physics | React Component | Vanilla JS Engine |
+|:---|:---|:---|:---|:---|
+| [**Antigravity**](interaction/antigravity-interactive-effect/) | Particles & Fields | WebGL2, Instanced Geometry, Oklab | `Antigravity.jsx` | `antigravity.js` |
+| [**Ballpit**](interaction/ballpit-interactive-effect/) | 3D Physics Simulation | WebGL2 Raymarching, Spatial Hash, PBR | `Ballpit.jsx` | `ballpit.js` |
+| [**Dock**](interaction/dock-interactive-effect/) | Navigation & Menus | Sub-stepped Euler Spring, SVG Pathing | `Dock.jsx` | `dock.js` |
+| [**DodgeField**](interaction/dodge-field-interactive-effect/) | Micro-Interactions | Repulsion Vectors, Exponential Falloff | `DodgeField.jsx` | `dodge-field.js` |
+| [**DotField**](interaction/dotfield-interactive-effect/) | Particle Grids | WebGL2, Lens Warping, OKLab Blending | `DotField.jsx` | `dotfield.js` |
+| [**ElasticMesh**](interaction/elastic-mesh-interactive-effect/) | 3D Typography | WebGL2, SDF Poisson Solver, 480Hz Spring | `ElasticMesh.jsx` | `elastic-mesh.js` |
+| [**FallingText**](interaction/falling-text-interactive-effect/) | Typography & Physics | Matter.js 2D Rigid-Body Dynamics | `FallingText.jsx` | `fallingtext.js` |
+| [**Folder**](interaction/folder-interactive-effect/) | 3D & Containers | CSS 3D Transforms, Perspective Physics | `Folder.jsx` | `folder.js` |
+| [**GlitchText**](interaction/glitch-text-interactive-effect/) | Typography Effects | Procedural Canvas Tearing, RGB Shadows | `GlitchText.jsx` | `glitchtext.js` |
+| [**GlowCursor**](interaction/glow-cursor-interactive-effect/) | Cursors & Trails | WebGL2 Fluid Navier-Stokes, 5-Level Bloom | `GlowCursor.jsx` | `glowcursor.js` |
+| [**GooeyNav**](interaction/gooey-nav-interactive-effect/) | Navigation | WebGL2 SDF Metaballs, Cubic Bézier | `GooeyNav.jsx` | `gooeynav.js` |
+| [**InfiniteSpiral**](interaction/infinite-spiral-interactive-effect/) | 3D Galleries | 3D Cylindrical Helix, Smoothstep Depth Blur | `InfiniteSpiral.jsx` | `infinite-spiral.js` |
+| [**Lanyard**](interaction/lanyard-interactive-effect/) | 3D Physics | Three.js, Verlet Cloth, Rigid Body | `Lanyard.jsx` | `lanyard.js` |
+| [**LaserFlow**](interaction/laser-flow-interactive-effect/) | Volumetric Lighting | WebGL2, Ray-Sphere Impacts, Edge Washes | `LaserFlow.jsx` | `laserflow.js` |
+| [**LiquidEther**](interaction/liquid-ether-interactive-effect/) | Fluid Dynamics | WebGL2 Navier-Stokes, Pressure Projection | `LiquidEther.jsx` | `liquidether.js` |
+| [**ParticleText**](interaction/particle-text-interactive-effect/) | Typography & Particles | HTML5 2D Canvas, Staggered Intro | `ParticleText.jsx` | `particletext.js` |
+| [**PillNav**](interaction/pill-nav-interactive-effect/) | Navigation | Spring Dynamics, SVG Ink-Fill, ResizeObserver | `PillNav.jsx` | `pillnav.js` |
+| [**SlingButton**](interaction/sling-button-interactive-effect/) | Buttons & Feedback | Tangent Catenary Band, Recoil Spring | `SlingButton.jsx` | `sling-button.js` |
+| [**SpecularBorder**](interaction/specular-border-interactive-effect/) | Buttons & Borders | WebGL2, Edge Ray-Tracing, Glassmorphism | `SpecularButton.jsx` | `specular.js` |
+| [**SplashCursor**](interaction/splash-cursor-interactive-effect/) | Cursors & Fluids | WebGL2 Navier-Stokes, Multi-Pass Bloom | `SplashCursor.jsx` | `splashcursor.js` |
+| [**WarpText**](interaction/warp-text-interactive-effect/) | Typography & Optics | WebGL2 Refraction, Chromatic Dispersion | `WarpText.jsx` | `warptext.js` |
+
+---
+
+## 📦 Repository Structure
 
 ```
 ui-ux-skills/
 ├── README.md
 ├── .gitignore
-└── skills/
+├── design/
+│   ├── awwwards-hero/
+│   ├── awwwards-motion/
+│   ├── awwwards-sections/
+│   ├── brandkit-gen/
+│   ├── imagegen-frontend/
+│   ├── pixel-perfect/
+│   ├── visual-redesign/
+│   └── website-color-combinations/
+│       ├── SKILL.md
+│       └── assets/ (palettes.json, color-utils.js)
+└── interaction/
     ├── antigravity-interactive-effect/
     ├── ballpit-interactive-effect/
     ├── dock-interactive-effect/
@@ -63,8 +97,6 @@ ui-ux-skills/
     ├── particle-text-interactive-effect/
     ├── pill-nav-interactive-effect/
     ├── sling-button-interactive-effect/
-    │   ├── SKILL.md
-    │   └── assets/ (SlingButton.jsx, SlingButton.css, sling-button.js)
     ├── specular-border-interactive-effect/
     ├── splash-cursor-interactive-effect/
     └── warp-text-interactive-effect/
@@ -72,56 +104,5 @@ ui-ux-skills/
 
 ---
 
-## 🛠️ Usage Examples
-
-### 1. React & Next.js
-Copy the target component and CSS file into your components folder:
-
-```jsx
-'use client';
-
-import SlingButton from './skills/sling-button-interactive-effect/assets/SlingButton';
-import './skills/sling-button-interactive-effect/assets/SlingButton.css';
-
-export default function SendInput() {
-  return (
-    <SlingButton
-      onSend={() => console.log('Sent!')}
-      padColor="#6366f1"
-      accentColor="#a5b4fc"
-      launchSpeed={2800}
-      particles={14}
-    />
-  );
-}
-```
-
-### 2. Standalone Vanilla JavaScript
-Include the stylesheet and script tag in your HTML:
-
-```html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <link rel="stylesheet" href="./skills/sling-button-interactive-effect/assets/SlingButton.css">
-</head>
-<body>
-  <div id="btn-container"></div>
-
-  <script src="./skills/sling-button-interactive-effect/assets/sling-button.js"></script>
-  <script>
-    const button = SlingButton.init(document.getElementById('btn-container'), {
-      size: 56,
-      padColor: '#3b82f6',
-      launchSpeed: 2600,
-      onSend: () => console.log('Fired!')
-    });
-  </script>
-</body>
-</html>
-```
-
----
-
 ## 📄 License
-MIT License. Inspired by and compatible with [React Bits](https://reactbits.dev).
+MIT License.
