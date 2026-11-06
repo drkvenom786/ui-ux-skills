@@ -4,9 +4,9 @@ A comprehensive, production-ready repository of **elite design pipelines** and *
 
 The repository is structured into two specialized domains:
 - 🎨 [**`design/`**](#-design-skills-design): Strict design pipelines, Awwwards-tier quality gates (from [VibeCurb](https://github.com/Yu-369/VibeCurb)), and the **45 Best Website Color Combinations & WCAG Contrast Design Systems** (inspired by [Onething Design](https://www.onething.design/post/best-colour-combinations-for-websites)).
-- ⚡ [**`interaction/`**](#-interaction-skills-interaction): 21 production-ready, physics-driven interactive UI/UX components inspired by [React Bits](https://reactbits.dev) (React/Next.js + Standalone Vanilla JS).
+- ⚡ [**`interaction/`**](#-interaction-skills-interaction): 22 production-ready, physics-driven interactive UI/UX components inspired by [React Bits](https://reactbits.dev) (React/Next.js + Standalone Vanilla JS).
 
-> ⚡ **[Master Interaction & UI/UX Orchestration Rules](ORCHESTRATION_RULES.md)**: Strict rules for typography-background pairings, multi-image galleries (InfiniteSpiral), single-image water refraction (WarpText), card counts (Folder, Lanyard, LaserFlow), low natural glow levels, zero browser alerts, and mobile navbar enforcement.
+> ⚡ **[Master Interaction & UI/UX Orchestration Rules](ORCHESTRATION_RULES.md)**: Strict rules for typography-background pairings, light backgrounds (Antigravity), multi-image galleries (InfiniteSpiral), single-image water refraction (WarpText), card counts (Lanyard, Folder, CardSwap, LaserFlow), subheadings calm at rest with click wave only, zero margin spaces across all devices, low natural glow levels, zero browser alerts, and mobile navbar enforcement.
 
 ---
 
@@ -29,7 +29,7 @@ Strict protocols that override average AI generation defaults with real spatial 
 
 ## ⚡ Interaction Skills (`interaction/`)
 
-A curated collection of **21 high-performance interactive UI/UX components and visual effects** inspired by [React Bits](https://reactbits.dev).
+A curated collection of **22 high-performance interactive UI/UX components and visual effects** inspired by [React Bits](https://reactbits.dev).
 
 Every interaction skill includes:
 1. **`SKILL.md`**: Mathematical formulations, props API table, and integration guides.
@@ -41,6 +41,7 @@ Every interaction skill includes:
 |:---|:---|:---|:---|:---|
 | [**Antigravity**](interaction/antigravity-interactive-effect/) | Particles & Fields | WebGL2, Instanced Geometry, Oklab | `Antigravity.jsx` | `antigravity.js` |
 | [**Ballpit**](interaction/ballpit-interactive-effect/) | 3D Physics Simulation | WebGL2 Raymarching, Spatial Hash, PBR | `Ballpit.jsx` | `ballpit.js` |
+| [**CardSwap**](interaction/card-swap-interactive-effect/) | 3D Stacks & Cards | 3D Transforms, Fling Gesture, Springs | `CardSwap.jsx` | `cardswap.js` |
 | [**Dock**](interaction/dock-interactive-effect/) | Navigation & Menus | Sub-stepped Euler Spring, SVG Pathing | `Dock.jsx` | `dock.js` |
 | [**DodgeField**](interaction/dodge-field-interactive-effect/) | Micro-Interactions | Repulsion Vectors, Exponential Falloff | `DodgeField.jsx` | `dodge-field.js` |
 | [**DotField**](interaction/dotfield-interactive-effect/) | Particle Grids | WebGL2, Lens Warping, OKLab Blending | `DotField.jsx` | `dotfield.js` |
@@ -68,6 +69,7 @@ Every interaction skill includes:
 ```
 ui-ux-skills/
 ├── README.md
+├── ORCHESTRATION_RULES.md
 ├── .gitignore
 ├── design/
 │   ├── awwwards-hero/
@@ -83,6 +85,9 @@ ui-ux-skills/
 └── interaction/
     ├── antigravity-interactive-effect/
     ├── ballpit-interactive-effect/
+    ├── card-swap-interactive-effect/
+    │   ├── SKILL.md
+    │   └── assets/ (CardSwap.jsx, CardSwap.css, cardswap.js)
     ├── dock-interactive-effect/
     ├── dodge-field-interactive-effect/
     ├── dotfield-interactive-effect/
@@ -103,8 +108,3 @@ ui-ux-skills/
     ├── splash-cursor-interactive-effect/
     └── warp-text-interactive-effect/
 ```
-
----
-
-## 📄 License
-MIT License.
