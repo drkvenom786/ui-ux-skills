@@ -6,6 +6,8 @@ The repository is structured into two specialized domains:
 - 🎨 [**`design/`**](#-design-skills-design): Strict design pipelines, Awwwards-tier quality gates (from [VibeCurb](https://github.com/Yu-369/VibeCurb)), and the **45 Best Website Color Combinations & WCAG Contrast Design Systems** (inspired by [Onething Design](https://www.onething.design/post/best-colour-combinations-for-websites)).
 - ⚡ [**`interaction/`**](#-interaction-skills-interaction): 21 production-ready, physics-driven interactive UI/UX components inspired by [React Bits](https://reactbits.dev) (React/Next.js + Standalone Vanilla JS).
 
+> ⚡ **[Master Interaction & UI/UX Orchestration Rules](ORCHESTRATION_RULES.md)**: Strict rules for typography-background pairings, multi-image galleries (InfiniteSpiral), single-image water refraction (WarpText), card counts (Folder, Lanyard, LaserFlow), low natural glow levels, zero browser alerts, and mobile navbar enforcement.
+
 ---
 
 ## 🎨 Design Skills (`design/`)
