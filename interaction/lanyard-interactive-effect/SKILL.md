@@ -28,6 +28,15 @@ date_added: 2026-11-05
 > 6. **THREE.JS r128+ UNIFORM COMPATIBILITY**:
 >    - Never set `sheen: 1` as a scalar on `MeshPhysicalMaterial` — Three.js r128 expects `THREE.Color` and will crash WebGL with `uniform3fv` error on frame 0. Use `THREE.MeshStandardMaterial` for `bandMaterial`.
 >    - Never call `strapTexture.dispose()` inside `repaintStrap()`; simply update canvas and set `strapTexture.needsUpdate = true`.
+> 7. **CIRCULAR ENAMEL ANCHOR PIN AT STARTING OF RIBBON**:
+>    - **ALWAYS add a physical 3D circular enamel/titanium anchor pin at the STARTING of the ribbon (at the top anchor `sim.anchor` where the strap originates)**.
+>    - This creates the realistic physical illusion that the lanyard ribbon is physically pinned/tacked to the background wall or surface at the top, hanging and swaying freely below it.
+>    - The circular pin must sit in positive Z-space (+0.024 in front of the ribbon), span slightly wider than the ribbon width (`radius: 0.165–0.185`, diameter $\approx 0.33–0.37$ for strap width $0.34–0.36$) to cleanly conceal the top origin.
+>    - **CLEAN PIN OCCLUSION (NO CORNER PEEKING)**: Ribbon vertices behind the pin ($dy \ge -R$) must have `angle = 0` and half-width clamped within the circular bezel ($\le \sqrt{R^2 - dy^2} - 0.015$) so no corner point ever pokes out through the side of the pin. The ribbon emerges cleanly from the bottom rim of the pin.
+>    - The circular pin can feature a titanium bezel, high-res enamel face, monogram, handle, and click-to-redirect functionality.
+> 8. **DYNAMIC 3D RIBBON BENDING & BALANCED MEDIUM LENGTH**:
+>    - **PRESERVE NATURAL 3D CLOTH BENDING & TWISTING**: The ribbon must dynamically bend, flex, twist, and undulate with Three.js Verlet cloth physics (`angle = -sim.twist * Math.pow(Math.min(1, progress / Math.max(held, 0.001)), 1.3)`). At `progress = 0` (top anchor pin), the ribbon is pinned flat against the wall, and curves smoothly down to the card clamp. Never freeze or flatten ribbon bending.
+>    - **BALANCED MEDIUM RIBBON LENGTH**: The ribbon length must be medium and balanced (`strapLength: 0.28–0.35`, screen drop $\approx 90–120\text{px}$), never overly elongated to push the card offscreen or into the taskbar, nor too short to crowd the pin or make the strap rigid. Bottom card clearance must be maintained at $\ge 30\text{px}$.
 
 A GPU-accelerated interactive 3D physics badge and lanyard engine powered by Three.js (originating from React Bits' `Lanyard`). The card hangs from a flexible fabric strap simulated via Position-Based Dynamics (PBD) and Verlet integration. Visitors can drag, stretch, throw, and click the card to flip it over, revealing custom front and back artwork with realistic specular reflections and holographic foil grating.
 

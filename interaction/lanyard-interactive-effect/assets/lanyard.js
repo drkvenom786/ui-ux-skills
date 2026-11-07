@@ -22,15 +22,17 @@
   const SAMPLES = 72;
   const FOV = 24;
   const STRAP_WIDTH = 0.36;
+  const PIN_RADIUS = 0.195;
+  const PIN_OFFSET_Y = 0.052;
   const RING_RADIUS = 0.095;
   const RING_TUBE = 0.0135;
   const EYELET_RADIUS = 0.036;
   const CLAMP_BODY = 0.15;
-  const FACE_WIDTH = 1024;
+  const FACE_WIDTH = 2880;
 
   const FINISHES = {
-    glossy: { roughness: 0.42, metalness: 0, clearcoat: 1, clearcoatRoughness: 0.06, foil: 0, anisotropy: 0 },
-    matte: { roughness: 0.85, metalness: 0, clearcoat: 0, clearcoatRoughness: 0.6, foil: 0, anisotropy: 0 },
+    glossy: { roughness: 0.2, metalness: 0, clearcoat: 0.6, clearcoatRoughness: 0.06, foil: 0, anisotropy: 0 },
+    matte: { roughness: 0.22, metalness: 0, clearcoat: 0.06, clearcoatRoughness: 0.15, foil: 0, anisotropy: 0 },
     holographic: { roughness: 0.3, metalness: 0, clearcoat: 1, clearcoatRoughness: 0.04, foil: 1, anisotropy: 0 },
     metallic: { roughness: 0.36, metalness: 0.75, clearcoat: 0.5, clearcoatRoughness: 0.18, foil: 0, anisotropy: 0.7 }
   };
@@ -298,6 +300,173 @@ if (foilStrength > 0.0) {
     return geometry;
   };
 
+  const buildPinBadge = (THREE, pinOptions = {}) => {
+    const group = new THREE.Group();
+    const radius = pinOptions.radius || PIN_RADIUS;
+    const depth = 0.024;
+
+    // 1. Outer Bezel (Polished titanium / chrome with bevel)
+    const bezelGeom = new THREE.CylinderGeometry(radius, radius * 1.05, depth, 48);
+    bezelGeom.rotateX(Math.PI / 2);
+    const bezelMat = new THREE.MeshStandardMaterial({
+      color: 0xd8dde6,
+      metalness: 0.95,
+      roughness: 0.14
+    });
+    const bezel = new THREE.Mesh(bezelGeom, bezelMat);
+    group.add(bezel);
+
+    // 2. High-Res Canvas Texture for Enamel Face (1024x1024)
+    const canvas = document.createElement('canvas');
+    canvas.width = 1024;
+    canvas.height = 1024;
+    const ctx = canvas.getContext('2d');
+
+    const accentColor = pinOptions.color || '#10B981';
+    const monogram = pinOptions.text || 'DB';
+    const subtitle = pinOptions.subtext || '';
+
+    const cx = 512, cy = 512, r = 480;
+
+    // Deep obsidian base
+    const bgGrad = ctx.createRadialGradient(cx, cy, 60, cx, cy, r);
+    bgGrad.addColorStop(0, '#161A22');
+    bgGrad.addColorStop(0.7, '#0E1118');
+    bgGrad.addColorStop(1, '#080A0E');
+    ctx.fillStyle = bgGrad;
+    ctx.beginPath();
+    ctx.arc(cx, cy, r, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Outer bevel ring
+    ctx.strokeStyle = '#2A3345';
+    ctx.lineWidth = 14;
+    ctx.beginPath();
+    ctx.arc(cx, cy, r - 25, 0, Math.PI * 2);
+    ctx.stroke();
+
+    // Glowing Colored Accent Ring (matching green / red drawing)
+    ctx.strokeStyle = accentColor;
+    ctx.lineWidth = 20;
+    ctx.shadowColor = accentColor;
+    ctx.shadowBlur = 28;
+    ctx.beginPath();
+    ctx.arc(cx, cy, r - 65, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.shadowBlur = 0;
+
+    // Concentric technical CAD ticks
+    ctx.save();
+    ctx.translate(cx, cy);
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.22)';
+    ctx.lineWidth = 4;
+    for (let i = 0; i < 32; i++) {
+      ctx.rotate((Math.PI * 2) / 32);
+      ctx.beginPath();
+      ctx.moveTo(r - 115, 0);
+      ctx.lineTo(r - 95, 0);
+      ctx.stroke();
+    }
+    ctx.restore();
+
+    // Inner Core Medallion
+    const coreGrad = ctx.createRadialGradient(cx, cy, 30, cx, cy, 240);
+    coreGrad.addColorStop(0, '#1E2533');
+    coreGrad.addColorStop(1, '#0C0E14');
+    ctx.fillStyle = coreGrad;
+    ctx.beginPath();
+    ctx.arc(cx, cy, 240, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.16)';
+    ctx.lineWidth = 6;
+    ctx.stroke();
+
+    // Monogram / Core Text
+    ctx.fillStyle = '#FFFFFF';
+    ctx.font = '800 150px "Syne", "Plus Jakarta Sans", sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(monogram, cx, cy - 24);
+
+    // Subtitle / Handle
+    if (subtitle) {
+      ctx.fillStyle = accentColor;
+      ctx.font = '700 46px "JetBrains Mono", monospace';
+      ctx.fillText(subtitle, cx, cy + 96);
+    }
+
+    // 4 Micro Hardware Rivets at Cardinal Points
+    const rivetAngles = [0, Math.PI / 2, Math.PI, (Math.PI * 3) / 2];
+    for (const ang of rivetAngles) {
+      const rx = cx + Math.cos(ang) * (r - 40);
+      const ry = cy + Math.sin(ang) * (r - 40);
+      const rGrad = ctx.createRadialGradient(rx - 3, ry - 3, 2, rx, ry, 16);
+      rGrad.addColorStop(0, '#FFFFFF');
+      rGrad.addColorStop(0.5, '#94A3B8');
+      rGrad.addColorStop(1, '#334155');
+      ctx.fillStyle = rGrad;
+      ctx.beginPath();
+      ctx.arc(rx, ry, 16, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    // Glossy resin dome highlight
+    const glossGrad = ctx.createLinearGradient(cx, cy - r, cx, cy + r * 0.15);
+    glossGrad.addColorStop(0, 'rgba(255, 255, 255, 0.40)');
+    glossGrad.addColorStop(0.5, 'rgba(255, 255, 255, 0.08)');
+    glossGrad.addColorStop(1, 'rgba(255, 255, 255, 0)');
+    ctx.fillStyle = glossGrad;
+    ctx.beginPath();
+    ctx.arc(cx, cy, r - 25, Math.PI * 1.05, Math.PI * 1.95);
+    ctx.closePath();
+    ctx.fill();
+
+    const faceTexture = new THREE.CanvasTexture(canvas);
+    faceTexture.generateMipmaps = true;
+    faceTexture.minFilter = THREE.LinearMipmapLinearFilter;
+    faceTexture.anisotropy = 16;
+
+    const faceGeom = new THREE.CircleGeometry(radius * 0.94, 48);
+    const faceMat = new THREE.MeshPhysicalMaterial({
+      map: faceTexture,
+      roughness: 0.12,
+      metalness: 0.2,
+      clearcoat: 1.0,
+      clearcoatRoughness: 0.04
+    });
+    const face = new THREE.Mesh(faceGeom, faceMat);
+    face.position.z = depth / 2 + 0.0015;
+    group.add(face);
+
+    // 3. Back Butterfly Clutch Fastener
+    const clutchGeom = new THREE.CylinderGeometry(0.065, 0.075, 0.024, 24);
+    clutchGeom.rotateX(Math.PI / 2);
+    const clutchMat = new THREE.MeshStandardMaterial({
+      color: 0x94a3b8,
+      metalness: 0.92,
+      roughness: 0.25
+    });
+    const clutch = new THREE.Mesh(clutchGeom, clutchMat);
+    clutch.position.z = -(depth / 2 + 0.022);
+    group.add(clutch);
+
+    return {
+      group,
+      bezel,
+      face,
+      clutch,
+      dispose: () => {
+        bezelGeom.dispose();
+        bezelMat.dispose();
+        faceGeom.dispose();
+        faceMat.dispose();
+        faceTexture.dispose();
+        clutchGeom.dispose();
+        clutchMat.dispose();
+      }
+    };
+  };
+
   const buildEnvironment = (THREE, renderer) => {
     const scene = new THREE.Scene();
     scene.background = new THREE.Color(0.035, 0.035, 0.04);
@@ -316,14 +485,14 @@ if (foilStrength > 0.0) {
       mesh.rotateZ(rotation);
       scene.add(mesh);
     };
-    panel(2.6, [0, 4.5, 8], [9, 4]);
-    panel(6, [-5.5, 0.5, 7], [0.9, 14]);
-    panel(4, [5, -0.5, 8], [0.6, 14]);
-    panel(3.5, [0, -1, 9], [24, 0.35], Math.PI / 3);
-    panel(2.5, [1, 2.5, 9], [24, 0.2], Math.PI / 3);
-    panel(1.4, [0, 6, -6], [12, 4]);
-    panel(0.5, [0, -7, 1], [16, 6]);
-    panel(0.9, [8, 0, -2], [4, 10]);
+    panel(0.7, [0, 4.5, 8], [9, 4]);
+    panel(1.2, [-5.5, 0.5, 7], [0.9, 14]);
+    panel(0.9, [5, -0.5, 8], [0.6, 14]);
+    panel(0.6, [0, -1, 9], [24, 0.35], Math.PI / 3);
+    panel(0.5, [1, 2.5, 9], [24, 0.2], Math.PI / 3);
+    panel(0.3, [0, 6, -6], [12, 4]);
+    panel(0.2, [0, -7, 1], [16, 6]);
+    panel(0.3, [8, 0, -2], [4, 10]);
     const pmrem = new THREE.PMREMGenerator(renderer);
     const target = pmrem.fromScene(scene, 0.035);
     pmrem.dispose();
@@ -335,7 +504,10 @@ if (foilStrength > 0.0) {
   const makeCanvasTexture = (THREE, canvas, anisotropy) => {
     const texture = new THREE.CanvasTexture(canvas);
     texture.colorSpace = THREE.SRGBColorSpace;
-    texture.anisotropy = anisotropy;
+    texture.generateMipmaps = true;
+    texture.minFilter = THREE.LinearMipmapLinearFilter;
+    texture.magFilter = THREE.LinearFilter;
+    texture.anisotropy = Math.max(anisotropy, 16);
     return texture;
   };
 
@@ -538,11 +710,11 @@ if (foilStrength > 0.0) {
     const environment = buildEnvironment(THREE, renderer);
     scene.environment = environment.texture;
     const camera = new THREE.PerspectiveCamera(FOV, 1, 0.1, 200);
-    const keyLight = new THREE.DirectionalLight(0xffffff, 1.6);
+    const keyLight = new THREE.DirectionalLight(0xffffff, 0.7);
     keyLight.position.set(-2.5, 4, 6);
-    const fillLight = new THREE.DirectionalLight(0xffffff, 0.45);
+    const fillLight = new THREE.DirectionalLight(0xffffff, 0.25);
     fillLight.position.set(3, -1, 4);
-    const ambientLight = new THREE.AmbientLight(0xffffff, 1.2);
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
     scene.add(keyLight, fillLight, ambientLight);
 
     const imageCache = new Map();
@@ -618,6 +790,16 @@ if (foilStrength > 0.0) {
     clampMesh.position.y = EYELET_RADIUS + CLAMP_BODY / 2 - 0.004;
     const eyelet = new THREE.Mesh(new THREE.TorusGeometry(EYELET_RADIUS, 0.0105, 14, 40), metalMaterial);
     clampGroup.add(clampMesh, eyelet);
+
+    let pinBadge = null;
+    let pinGroup = null;
+    let pinMeshObjects = [];
+    if (options.pin && options.pin.enabled !== false) {
+      pinBadge = buildPinBadge(THREE, options.pin);
+      pinGroup = pinBadge.group;
+      pinMeshObjects = [pinBadge.bezel, pinBadge.face, pinBadge.clutch];
+      scene.add(pinGroup);
+    }
     scene.add(clampGroup);
 
     const vectors = () => Array.from({ length: JOINTS + 1 }, () => new THREE.Vector3());
@@ -923,8 +1105,10 @@ if (foilStrength > 0.0) {
       foilUniforms.foilFill.value.set(3, -1, 4).normalize().transformDirection(camera.matrixWorldInverse);
       foilUniforms.foilTop.value.set(0.5, 4.5, 8).normalize().transformDirection(camera.matrixWorldInverse);
       const anchorX = ((ANCHORS[settings.anchor] ?? 0.5) - 0.5) * viewWidth;
-      const anchorY = viewHeight / 2 + 0.2;
-      const cardTop = viewHeight / 2 - viewHeight * mix(0.14, 0.42, clamp(settings.strapLength, 0, 1));
+      const anchorMargin = pinGroup ? 0.20 : 0;
+      const anchorY = viewHeight / 2 - anchorMargin;
+      const span = viewHeight * mix(0.18, 0.28, clamp(settings.strapLength, 0, 1)) + (28 * viewHeight / Math.max(view.height, 1));
+      const cardTop = anchorY - span;
       const hangTop = cardTop + (layout.hangY - layout.height / 2);
       sim.anchor.set(anchorX, anchorY, 0);
       configureSimulation(layout, anchorY - hangTop);
@@ -1058,11 +1242,26 @@ if (foilStrength > 0.0) {
         if (side.lengthSq() < 1e-10) side.copy(i > 0 ? sides[i - 1] : scratch.a.set(1, 0, 0));
         side.normalize();
         if (i > 0 && side.dot(sides[i - 1]) < 0) side.negate();
-        const angle = -sim.twist * Math.pow(Math.min(1, i / (SAMPLES - 1) / held), 1.3);
+
+        const p = points[i];
+        const progress = i / (SAMPLES - 1);
+        const pinCenterY = sim.anchor.y - PIN_OFFSET_Y;
+        const pinBottomY = pinCenterY - PIN_RADIUS;
+        const isBehindPin = pinGroup && p.y >= pinBottomY;
+
+        // While behind circular pin, keep angle = 0 so ribbon is flat and untwisted behind the pin
+        let angle = 0;
+        if (!isBehindPin) {
+          // Below the pin: full dynamic 3D cloth bending and twisting
+          const pinExitProgress = Math.min(0.28, (PIN_OFFSET_Y + PIN_RADIUS) / Math.max(length, 0.001));
+          const ribbonProgress = progress <= pinExitProgress ? 0 : (progress - pinExitProgress) / (1 - pinExitProgress);
+          angle = -sim.twist * Math.pow(Math.min(1, ribbonProgress / Math.max(held, 0.001)), 1.3);
+        }
+
         facing.crossVectors(tangent, side);
         across.copy(side).multiplyScalar(Math.cos(angle)).addScaledVector(facing, Math.sin(angle));
         facing.crossVectors(tangent, across);
-        const p = points[i];
+
         const v = (1 - i / (SAMPLES - 1)) * repeats;
         for (let c = 0; c < columns; c++) {
           const k = i * columns + c;
@@ -1088,6 +1287,13 @@ if (foilStrength > 0.0) {
       work.basis.makeBasis(across, axis, facing);
       clampGroup.quaternion.setFromRotationMatrix(work.basis);
       clampGroup.position.copy(hang);
+
+      if (pinGroup) {
+        // Physical circular pin moved slightly below to cleanly overlap the ribbon with zero gap
+        pinGroup.position.set(sim.anchor.x, sim.anchor.y - PIN_OFFSET_Y, sim.anchor.z + 0.024);
+        pinGroup.quaternion.set(0, 0, 0, 1);
+        pinGroup.updateMatrixWorld(true);
+      }
     };
 
     const render = () => {
@@ -1162,13 +1368,81 @@ if (foilStrength > 0.0) {
     };
 
     const pickCard = () => {
-      cardGroup.updateMatrixWorld();
-      const hits = raycaster.intersectObjects([bodyMesh, frontMesh, backMesh], false);
+      cardGroup.updateMatrixWorld(true);
+      if (clampGroup) clampGroup.updateMatrixWorld(true);
+      if (pinGroup) pinGroup.updateMatrixWorld(true);
+      const hits = raycaster.intersectObjects([frontMesh, backMesh, bodyMesh, ...pinMeshObjects], false);
       return hits[0] || null;
+    };
+
+    const findHitLink = () => {
+      // 1. Raycast circular pin badges first
+      if (pinMeshObjects.length && pinGroup) {
+        pinGroup.updateMatrixWorld(true);
+        const pinHits = raycaster.intersectObjects(pinMeshObjects, false);
+        if (pinHits.length > 0) {
+          const pinUrl = settings.pin?.url || settings.primaryUrl || (settings.links && settings.links[0]?.url);
+          if (pinUrl) {
+            return {
+              name: settings.pin?.title || 'Official Website',
+              url: pinUrl
+            };
+          }
+        }
+      }
+
+      // 2. Raycast front and back face meshes directly (never shadowed by bodyMesh)
+      cardGroup.updateMatrixWorld(true);
+      frontMesh.updateMatrixWorld(true);
+      backMesh.updateMatrixWorld(true);
+      const faceHits = raycaster.intersectObjects([frontMesh, backMesh], false);
+      if (!faceHits.length || !settings.links || !settings.links.length) return null;
+
+      const hit = faceHits[0];
+      if (!hit.uv) return null;
+      const isFront = hit.object === frontMesh;
+      const isBack = hit.object === backMesh;
+      if (!isFront && !isBack) return null;
+
+      const px = hit.uv.x * 2880;
+      const py = (1 - hit.uv.y) * 2048;
+
+      for (const link of settings.links) {
+        const boxes = isFront ? link.boxes?.front : link.boxes?.back;
+        if (!boxes) continue;
+        const list = Array.isArray(boxes[0]) ? boxes : [boxes];
+        for (const b of list) {
+          if (px >= b[0] && px <= b[0] + b[2] && py >= b[1] && py <= b[1] + b[3]) {
+            return link;
+          }
+        }
+      }
+      return null;
     };
 
     const setCursor = value => {
       if (canvas.style.cursor !== value) canvas.style.cursor = value;
+    };
+
+    let lastOpenTime = 0;
+    const openUrlSafely = url => {
+      if (!url) return;
+      const now = performance.now();
+      if (now - lastOpenTime < 600) return;
+      lastOpenTime = now;
+      try {
+        const a = document.createElement('a');
+        a.href = url;
+        a.target = '_blank';
+        a.rel = 'noopener noreferrer';
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(() => {
+          if (a.parentNode) a.parentNode.removeChild(a);
+        }, 150);
+      } catch (err) {
+        window.open(url, '_blank', 'noopener,noreferrer');
+      }
     };
 
     let lastFlipTime = 0;
@@ -1196,56 +1470,127 @@ if (foilStrength > 0.0) {
     const onPointerDown = event => {
       if (!settings.interactive || event.button > 0) return;
       toPointer(event);
+      const link = findHitLink();
       const hit = pickCard();
-      if (!hit) return;
-      sim.grab = {
-        local: hit.point.clone().sub(sim.body.position).applyQuaternion(sim.body.quaternion.clone().invert()),
-        rotation: sim.body.quaternion.clone(),
-        reach: hit.distance,
-        from: hit.point.clone(),
-        target: hit.point.clone()
+      if (!link && !hit) return;
+
+      press = {
+        x: event.clientX,
+        y: event.clientY,
+        time: performance.now(),
+        point: hit ? hit.point.clone() : sim.body.position.clone(),
+        link: link,
+        hit: hit,
+        dragged: false
       };
-      press = { x: event.clientX, y: event.clientY, time: performance.now(), point: hit.point.clone() };
-      canvas.setPointerCapture?.(event.pointerId);
-      setCursor('grabbing');
-      event.preventDefault();
+
+      const grabPoint = hit ? hit.point : (sim.body.position.clone());
+      sim.grab = {
+        local: grabPoint.clone().sub(sim.body.position).applyQuaternion(sim.body.quaternion.clone().invert()),
+        rotation: sim.body.quaternion.clone(),
+        reach: hit ? hit.distance : camera.position.distanceTo(sim.body.position),
+        from: grabPoint.clone(),
+        target: grabPoint.clone()
+      };
+
+      try {
+        canvas.setPointerCapture?.(event.pointerId);
+      } catch (e) {}
+
+      setCursor(link ? 'pointer' : 'grabbing');
       start();
     };
 
     const onPointerMove = event => {
       if (!settings.interactive) return;
       toPointer(event);
-      if (sim.grab) {
-        if (press && Math.hypot(event.clientX - press.x, event.clientY - press.y) > 20) press = null;
+
+      if (press) {
+        const dist = Math.hypot(event.clientX - press.x, event.clientY - press.y);
+        if (dist > 8) {
+          press.dragged = true;
+        }
+      }
+
+      if (sim.grab && press && press.dragged) {
         raycaster.ray.at(sim.grab.reach, sim.grab.target);
+        setCursor('grabbing');
         start();
         return;
       }
+
       if (event.pointerType === 'touch') return;
-      hovering = !!pickCard();
-      setCursor(hovering ? 'grab' : '');
+
+      const link = findHitLink();
+      if (link && link.url) {
+        setCursor('pointer');
+        canvas.title = `Click to visit ${link.name || link.url}`;
+      } else {
+        const hit = pickCard();
+        hovering = !!hit;
+        if (hit) {
+          setCursor('grab');
+          canvas.title = 'Drag to swing • Click to flip';
+        } else {
+          setCursor('');
+          canvas.title = '';
+        }
+      }
     };
 
     const onPointerUp = event => {
-      if (!sim.grab) return;
       sim.grab = null;
-      if (press && performance.now() - press.time < 500) triggerFlip(press.point);
+
+      try {
+        canvas.releasePointerCapture?.(event.pointerId);
+      } catch (e) {}
+
+      if (press) {
+        const dist = Math.hypot(event.clientX - press.x, event.clientY - press.y);
+        const elapsed = performance.now() - press.time;
+        if (!press.dragged && dist < 12 && elapsed < 500) {
+          toPointer(event);
+          const currentLink = findHitLink() || press.link;
+          if (currentLink && currentLink.url) {
+            openUrlSafely(currentLink.url);
+            press = null;
+            start();
+            return;
+          } else if (press.hit) {
+            triggerFlip(press.point);
+            press = null;
+            start();
+            return;
+          }
+        }
+      }
+
       press = null;
-      canvas.releasePointerCapture?.(event.pointerId);
-      setCursor(hovering && event.pointerType !== 'touch' ? 'grab' : '');
+      toPointer(event);
+      const link = findHitLink();
+      setCursor(link ? 'pointer' : (pickCard() && event.pointerType !== 'touch' ? 'grab' : ''));
       start();
     };
 
     const onTouchStart = event => {
       if (!settings.interactive || event.touches.length !== 1) return;
       toPointer(event.touches[0]);
-      if (pickCard()) event.preventDefault();
+      if (pickCard() || findHitLink()) event.preventDefault();
     };
 
     const onClick = event => {
-      if (!settings.interactive) return;
       toPointer(event);
-      if (pickCard()) triggerFlip(sim.body.position);
+      const link = findHitLink();
+      if (link && link.url) {
+        event.preventDefault();
+        event.stopPropagation();
+        openUrlSafely(link.url);
+        return;
+      }
+      const hit = pickCard();
+      if (hit) {
+        triggerFlip(hit.point);
+      }
     };
 
     canvas.addEventListener('pointerdown', onPointerDown);
@@ -1259,7 +1604,7 @@ if (foilStrength > 0.0) {
     const resize = () => {
       view.width = Math.max(1, container.clientWidth);
       view.height = Math.max(1, container.clientHeight);
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2.5));
       renderer.setSize(view.width, view.height, false);
       apply();
       render();
@@ -1293,6 +1638,7 @@ if (foilStrength > 0.0) {
         canvas.removeEventListener('lostpointercapture', onPointerUp);
         canvas.removeEventListener('touchstart', onTouchStart);
         canvas.removeEventListener('click', onClick);
+        if (pinBadge) pinBadge.dispose();
         [bodyMesh, frontMesh, backMesh, ring, clampMesh, eyelet, band].forEach(mesh => mesh.geometry?.dispose());
         [frontMaterial, backMaterial, edgeMaterial, metalMaterial, bandMaterial].forEach(material => material.dispose());
         [frontTexture, backTexture, strapTexture, grain, weave].forEach(texture => texture.dispose());

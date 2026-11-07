@@ -417,9 +417,10 @@
       return textWidth + Math.max(0, chars.length - 1) * letterSpacing;
     };
 
-    const drawLine = (ctx, line, x, y, letterSpacing) => {
+    const drawLine = (ctx, line, x, y, letterSpacing, align = 'center') => {
       const chars = Array.from(line);
-      let cursor = x - measureLine(ctx, line, letterSpacing) / 2;
+      const totalWidth = measureLine(ctx, line, letterSpacing);
+      let cursor = align === 'left' ? 0 : (align === 'right' ? x * 2 - totalWidth : x - totalWidth / 2);
       chars.forEach((char, index) => {
         ctx.fillText(char, cursor, y);
         cursor += ctx.measureText(char).width + (index === chars.length - 1 ? 0 : letterSpacing);
@@ -485,28 +486,43 @@
         rasterCtx.textBaseline = 'middle';
         rasterCtx.imageSmoothingEnabled = true;
 
+        const align = (options.align || computed.textAlign || 'left').toLowerCase();
         let lines = [];
-        if (options.multiline) {
-          // Word-wrapping for descriptions / paragraphs
+        const maxLineWidth = width * 0.96;
+
+        // Auto word-wrap unless singleLine explicitly forced
+        if (options.multiline || options.singleLine !== true) {
           rasterCtx.font = `${fontWeight} ${fontSizePx}px ${fontFamily}`;
-          const words = text.split(/\s+/);
-          let currentLine = '';
-          const maxLineWidth = width * 0.94;
-          words.forEach(word => {
-            const testLine = currentLine ? currentLine + ' ' + word : word;
-            if (measureLine(rasterCtx, testLine, letterSpacing) > maxLineWidth && currentLine) {
-              lines.push(currentLine);
-              currentLine = word;
-            } else {
-              currentLine = testLine;
-            }
+          const rawLines = String(text).split('\n');
+          rawLines.forEach(rawLine => {
+            const words = rawLine.trim().split(/\s+/);
+            let currentLine = '';
+            words.forEach(word => {
+              const testLine = currentLine ? currentLine + ' ' + word : word;
+              if (measureLine(rasterCtx, testLine, letterSpacing) > maxLineWidth && currentLine) {
+                lines.push(currentLine);
+                currentLine = word;
+              } else {
+                currentLine = testLine;
+              }
+            });
+            if (currentLine) lines.push(currentLine);
           });
-          if (currentLine) lines.push(currentLine);
         } else {
           lines = String(text).split('\n');
         }
+        if (!lines.length) lines = [text];
 
+        // Ensure no single word or line ever exceeds maxLineWidth by scaling font gracefully
         rasterCtx.font = `${fontWeight} ${fontSizePx}px ${fontFamily}`;
+        const widest = Math.max(...lines.map(line => measureLine(rasterCtx, line, letterSpacing)), 1);
+        if (widest > maxLineWidth) {
+          const fit = maxLineWidth / widest;
+          fontSizePx = Math.max(14, fontSizePx * fit);
+          letterSpacing *= fit;
+          lineHeight = fontSizePx * 1.25;
+          rasterCtx.font = `${fontWeight} ${fontSizePx}px ${fontFamily}`;
+        }
 
         if (options.gradientColors && Array.isArray(options.gradientColors)) {
           const grad = rasterCtx.createLinearGradient(0, 0, width, 0);
@@ -525,30 +541,21 @@
           rasterCtx.shadowBlur = options.shadowBlur || 20;
         }
 
-        const maxWidth = width * 0.95;
-        const maxHeight = height * 0.95;
-        const widest = Math.max(...lines.map(line => measureLine(rasterCtx, line, letterSpacing)), 1);
         const blockHeight = Math.max(lineHeight * lines.length, 1);
-        
-        // Only shrink if explicitly requested; otherwise respect the true original font size
-        if (options.shrinkToFit && options.singleLine) {
-          const fit = Math.min(1, maxWidth / widest, maxHeight / blockHeight);
-          if (fit < 1) {
-            fontSizePx *= fit;
-            letterSpacing *= fit;
-            lineHeight *= fit;
-            rasterCtx.font = `${fontWeight} ${fontSizePx}px ${fontFamily}`;
+        if (blockHeight > height) {
+          const neededHeight = Math.ceil(blockHeight + 16);
+          container.style.minHeight = `${neededHeight}px`;
+          if (canvas.height < neededHeight * dpr) {
+            canvas.height = Math.round(neededHeight * dpr);
+            rasterCanvas.height = Math.round(neededHeight * dpr);
+            gl.viewport(0, 0, canvas.width, canvas.height);
           }
         }
 
-        // Auto-expand container if block height exceeds container height
-        if (blockHeight > height && container.style) {
-          container.style.minHeight = `${Math.ceil(blockHeight + 16)}px`;
-        }
-
-        const startY = height / 2 - (lineHeight * (lines.length - 1)) / 2;
+        const effectiveCanvasHeight = canvas.height / dpr;
+        const startY = effectiveCanvasHeight / 2 - (lineHeight * (lines.length - 1)) / 2;
         lines.forEach((line, index) =>
-          drawLine(rasterCtx, line, width / 2, startY + index * lineHeight, letterSpacing)
+          drawLine(rasterCtx, line, width / 2, startY + index * lineHeight, letterSpacing, align)
         );
       }
 
