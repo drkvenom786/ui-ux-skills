@@ -26,6 +26,7 @@ An elite, full-screen mobile and desktop staggered sliding navigation menu origi
    - Clicking the toggle button triggers a high-speed multi-cycle text reel flip animation between "Menu" and "Close" using GSAP `power4.out`.
 5. **Rotating Cross / Plus Icon**:
    - A minimalist 2-line geometric cross rotates smoothly to 225° on open (`power4.out`) and returns to 0° on close (`power3.inOut`).
+   - **Cross / Plus (`+`) Centering & Visibility Rule**: The plus icon container (`.sm-icon`) must be positioned immediately on the right side of the toggle text (`margin-left: 6px; display: inline-flex !important; align-items: center; justify-content: center;`). Its horizontal (`plusH`) and vertical (`plusV`) bars must be centered with `transformOrigin: '7px 1px'` (width 14px, height 2px inside a 16x16 container) so that GSAP `rotate: 0` and `rotate: 90` maintain a clean mathematical `+` cross without being displaced by CSS `translate(-50%, -50%)` overrides. On open, rotating the container to 225° transforms the `+` directly into a crisp diagonal `✕`.
 6. **Social Links Deck**:
    - Staggered social links fade and glide into view (`y: 0, opacity: 1`) with subtle hover dimming on non-hovered siblings.
 7. **Theme & Palette Compatibility**:
