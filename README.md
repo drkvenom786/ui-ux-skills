@@ -4,7 +4,7 @@ A comprehensive, production-ready repository of **elite design pipelines** and *
 
 The repository is structured into two specialized domains:
 - [**`design/`**](#design-skills-design): Strict design pipelines, Awwwards-tier quality gates (from [VibeCurb](https://github.com/Yu-369/VibeCurb)), and the **45 Best Website Color Combinations & WCAG Contrast Design Systems** (inspired by [Onething Design](https://www.onething.design/post/best-colour-combinations-for-websites)).
-- [**`interaction/`**](#interaction-skills-interaction): 22 production-ready, physics-driven interactive UI/UX components inspired by [React Bits](https://reactbits.dev) (React/Next.js + Standalone Vanilla JS).
+- [**`interaction/`**](#interaction-skills-interaction): 23 production-ready, physics-driven interactive UI/UX components inspired by [React Bits](https://reactbits.dev) (React/Next.js + Standalone Vanilla JS).
 
 > **[Master Interaction & UI/UX Orchestration Rules](ORCHESTRATION_RULES.md)**: Strict rules for typography-background pairings, light backgrounds (Antigravity conditionality), multi-image galleries (InfiniteSpiral continuous two-section bridging), single-image water refraction (WarpText), card counts (Lanyard freedom mandate, Folder, CardSwap, LaserFlow in last section), subheadings calm at rest with click wave only, zero margin spaces across all devices, low natural glow levels, zero browser alerts, strict SVG icons (zero emojis), and mobile navbar enforcement.
 
@@ -29,7 +29,7 @@ Strict protocols that override average AI generation defaults with real spatial 
 
 ## Interaction Skills (`interaction/`)
 
-A curated collection of **22 high-performance interactive UI/UX components and visual effects** inspired by [React Bits](https://reactbits.dev).
+A curated collection of **23 high-performance interactive UI/UX components and visual effects** inspired by [React Bits](https://reactbits.dev).
 
 Every interaction skill includes:
 1. **`SKILL.md`**: Mathematical formulations, props API table, and integration guides.
@@ -60,6 +60,7 @@ Every interaction skill includes:
 | [**SlingButton**](interaction/sling-button-interactive-effect/) | Buttons & Feedback | Tangent Catenary Band, Recoil Spring | `SlingButton.jsx` | `sling-button.js` |
 | [**SpecularBorder**](interaction/specular-border-interactive-effect/) | Buttons & Borders | WebGL2, Edge Ray-Tracing, Glassmorphism | `SpecularButton.jsx` | `specular.js` |
 | [**SplashCursor**](interaction/splash-cursor-interactive-effect/) | Cursors & Fluids | WebGL2 Navier-Stokes, Multi-Pass Bloom | `SplashCursor.jsx` | `splashcursor.js` |
+| [**StaggeredMenu**](interaction/staggered-menu-interactive-effect/) | Navigation & Menus | GSAP Timelines, Staggered Prelayers, Numbering | `StaggeredMenu.jsx` | `staggeredmenu.js` |
 | [**WarpText**](interaction/warp-text-interactive-effect/) | Typography & Optics | WebGL2 Refraction, Chromatic Dispersion | `WarpText.jsx` | `warptext.js` |
 
 ---

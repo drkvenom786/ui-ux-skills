@@ -127,7 +127,8 @@ Always give first priority to the installed interactive skills (`<skill-name>-in
   - **Corner Radius Matching Mandate**: Whenever applying border glow or specular border lighting effects, **ALWAYS make sure that the glow line and the border of the element match perfectly at all corners if the element has any `border-radius`**.
   - **Zero Corner Distortion**: The illuminated glow beam must seamlessly hug the curved corner arcs rather than cutting across or rendering as sharp $90^\circ$ rectangles. Always inherit `parseFloat(window.getComputedStyle(el).borderRadius)` and trace with exact matching `roundRect` or SDF rounded corner arcs. If using CSS pseudo-elements, strictly enforce `border-radius: inherit !important;`.
 - **Application Dock & Launcher**: ALWAYS use `dock-interactive-effect` (`dock.js`, `Dock.css`) with cosine-squared magnification and parabolic click hops.
-- **Navigation Bars**: ALWAYS use `pill-nav-interactive-effect` (`pillnav.js`, `PillNav.css`) with ink-fill rollout and spring gliding pills.
+- **Navigation Bars**: ALWAYS use `pill-nav-interactive-effect` (`pillnav.js`, `PillNav.css`) for floating desktop and tablet navigation bars with ink-fill rollout and spring gliding pills.
+- **Mobile Navigation & Staggered Menus**: ALWAYS use `staggered-menu-interactive-effect` (`staggeredmenu.js`, `StaggeredMenu.css`, `StaggeredMenu.jsx`) for full-screen and slide-over mobile navigation with cascading color prelayers, rotating cross toggle, kinetic text cycling, and dynamic index numbering.
 
 ---
 
