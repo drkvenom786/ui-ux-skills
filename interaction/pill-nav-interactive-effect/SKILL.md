@@ -177,7 +177,12 @@ export default function Header() {
    - Disables initial intro unrolling, logo hover spins, and spring gliding; transitions snap instantaneously for users with vestibular sensitivities.
 3. **No Heavy Dependencies**:
    - Built entirely on standard modern CSS and the native Web Animations API (`element.animate()`). Zero external bundle weight.
+
 4. **Smooth Scroll & Scroll-Spy Synchronization**:
-   - When integrating PillNav with single-page smooth scrolling and an IntersectionObserver scroll-spy, ALWAYS use a programmatic navigation lock (isNavigatingProgrammatically = true).
+   - When integrating `PillNav` with single-page smooth scrolling and an `IntersectionObserver` scroll-spy, ALWAYS use a programmatic navigation lock (`isNavigatingProgrammatically = true`).
    - While smooth scrolling is animating, strictly ignore intermediate observer callbacks. This prevents sections passed during the scroll from pulling the active color fill back to previous options before reaching the target.
-   - Release the lock 100-140ms after the programmatic scroll finishes.
+   - In pillnav.js, do NOT reset state.hover = -1 on ocusout events (focus shifts on click, which previously caused the hover target to prematurely fall back to the old selectedIndex before the new index was committed).
+   - On pointerdown, immediately lock state.hover = index and 	his.selectedIndex = index so the spring target never flips backward to the previous option upon click.
+   - Use a timestamp-based lock (
+avLockUntil = Date.now() + 1000) in pp.js to ensure scroll-spy callbacks cannot override the chosen item during smooth scrolling.
+
