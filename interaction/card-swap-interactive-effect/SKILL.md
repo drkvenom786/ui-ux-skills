@@ -148,3 +148,22 @@ export default function StackSection() {
   - **ALWAYS place on the RIGHT side** with descriptive narrative text, search controls, or category tabs on the **LEFT side**.
   - **NEVER duplicate with a static card grid underneath**: The swipe card deck IS the collection showcase.
 - **Copywriting**: Never write instructional sentences ("Click and drag to swap", "Fling the card"). The tactile stack affordance is self-evident.
+
+---
+
+## 7. Pure-Design UI Stage Architecture (Zero Raster Images Mandate)
+
+When building feature showcases or technical capability decks, **do NOT use static screenshots or stock raster images in the cards**. Instead, craft high-precision pure-design interactive stages using semantic HTML, CSS, and crisp inline vector SVGs passed via `item.html`:
+
+- **Simulated Component Stages**:
+  - **Media Players**: Mock time scrubbers (`.mock-scrubber`), animated equalizer spectrums (`@keyframes wavePulse`), timecode pills, and playback controls.
+  - **Vertical Video / Shorts**: Simulated action rails (heart, remix, comments) and gesture guides.
+  - **Customization / Themes**: Interactive theme swatches with radial glows and active selection rings.
+  - **Intelligent Search**: Quick filter pill chips, simulated search bar with active blinking cursor.
+- **Micro-Badges & Metadata**:
+  - Feature domain badge (e.g., `CORE PLAYBACK`, `AUDIO ENGINE`, `THEME ENGINE`).
+  - Architecture tags (`AV1 60fps`, `24-bit / 192kHz`, `PiP Mode`).
+- **Tactile Depth & Glassmorphism**:
+  - Card body: `#0f0b1a` with multi-stop border gradient (`rgba(255,255,255,0.12)`).
+  - Hover glow: Subtle theme-matched specular rim light on pointer proximity.
+
