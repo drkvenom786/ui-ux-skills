@@ -177,3 +177,7 @@ export default function Header() {
    - Disables initial intro unrolling, logo hover spins, and spring gliding; transitions snap instantaneously for users with vestibular sensitivities.
 3. **No Heavy Dependencies**:
    - Built entirely on standard modern CSS and the native Web Animations API (`element.animate()`). Zero external bundle weight.
+4. **Smooth Scroll & Scroll-Spy Synchronization**:
+   - When integrating PillNav with single-page smooth scrolling and an IntersectionObserver scroll-spy, ALWAYS use a programmatic navigation lock (isNavigatingProgrammatically = true).
+   - While smooth scrolling is animating, strictly ignore intermediate observer callbacks. This prevents sections passed during the scroll from pulling the active color fill back to previous options before reaching the target.
+   - Release the lock 100-140ms after the programmatic scroll finishes.
