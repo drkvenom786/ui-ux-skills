@@ -24,6 +24,8 @@ Strict protocols that override average AI generation defaults with real spatial 
 | [**`pixel-perfect`**](design/pixel-perfect/) | Image-to-Code | VibeCurb | Exact design replica pipeline across 7 layers (grid, type, color, spacing, components, atmosphere, interaction). |
 | [**`visual-redesign`**](design/visual-redesign/) | Redesign | VibeCurb | Surgical aesthetic upgrade for existing React code without breaking functional business logic or state. |
 | [**`website-color-combinations`**](design/website-color-combinations/) | Color Systems | Onething Design 2026 | 45 battle-tested palettes across 9 styles, WCAG 4.5:1 / 3:1 contrast auditing, 60-30-10 distribution, and tokens. |
+| [**`agentic-seo`**](design/agentic-seo/) | Search & Rank #1 | Bhanunamikaze | LLM-first SEO audit engine with 89 scripts, 16 sub-skills, 10 specialist agents, 500+ keyword topical clusters, schema validation, and ranking plans. |
+| [**`web-quality-seo`**](design/web-quality-seo/) | Technical SEO | Addy Osmani (Chrome) | Google Lighthouse SEO, Core Web Vitals, crawlability, robots.txt, XML sitemaps, structured data, and agentic AI crawler controls. |
 
 ---
 
@@ -73,6 +75,10 @@ ui-ux-skills/
 ├── ORCHESTRATION_RULES.md
 ├── .gitignore
 ├── design/
+│   ├── agentic-seo/
+│   │   ├── SKILL.md
+│   │   ├── scripts/ (89 SEO audit scripts)
+│   │   └── resources/ (16 sub-skills, 10 specialist agents)
 │   ├── awwwards-hero/
 │   ├── awwwards-motion/
 │   ├── awwwards-sections/
@@ -80,6 +86,9 @@ ui-ux-skills/
 │   ├── imagegen-frontend/
 │   ├── pixel-perfect/
 │   ├── visual-redesign/
+│   ├── web-quality-seo/
+│   │   ├── SKILL.md
+│   │   └── references/ (STRUCTURED-DATA.md)
 │   └── website-color-combinations/
 │       ├── SKILL.md
 │       └── assets/ (palettes.json, color-utils.js)

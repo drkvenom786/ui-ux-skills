@@ -219,3 +219,48 @@ Always give first priority to the installed interactive skills (`<skill-name>-in
 >   - Headings, titles, and author lines must be bold, dark, and prominent.
 >   - Subtitles, metadata, and labels must be crisp charcoal/slate (`#4a4031`, `#374151`), never faint beige.
 >   - Interactive buttons, tabs, inputs, and controls must have distinct high-contrast borders and clear focus/hover indicators.
+
+---
+
+## 3. Mandatory SEO, 500+ Keywords Matrix, Meta Architecture, Sitemaps & Google Rank #1 Mandate
+Whenever designing, developing, or optimizing any website, web application, landing page, or digital product, ALWAYS enforce the following search engine dominance protocols based on **Google Search Central Guidelines**, **Lighthouse SEO standards (Addy Osmani)**, and **Agentic SEO audits**:
+
+### A. 500+ Semantic Keywords Matrix & Topical Authority
+- **Exhaustive 500+ Keyword Density Matrix**: Every website must be backed by a comprehensive matrix of 500+ domain-specific, high-volume, long-tail, and LSI (Latent Semantic Indexing) keywords across 5 distinct intent tiers:
+  1. **Primary Seed & High-Intent Commercial Terms**: The highest-converting core keywords.
+  2. **Transactional & Problem-Solving Queries**: Searches where visitors actively seek solutions or services.
+  3. **Long-Tail Question Phrases**: Natural language questions (Who, What, Why, How, Best) specifically engineered to capture Google "People Also Ask" (PAA) rich boxes and voice search.
+  4. **Categorical, Technical & Comparative Queries**: Detailed feature comparisons, industry standards, specifications, and alternatives.
+  5. **Semantic LSI Entities & Synonyms**: Contextual co-occurring entities that prove exhaustive topical authority to Google Hummingbird and RankBrain algorithms.
+- **Strategic Multi-Layer Keyword Embedding**:
+  - Embedded in `<meta name="keywords" content="...">`.
+  - Codified in Schema.org JSON-LD `"keywords": [...]` structured arrays.
+  - Naturally woven into semantic `<h1>`, `<h2>`, and `<h3>` heading hierarchies, opening paragraphs, feature grids, FAQ sections, image `alt` attributes, and anchor link labels without keyword stuffing.
+
+### B. Complete Meta Architecture & Social Graph Tags
+- **Title Tag Formulation**: 50–60 characters strictly structured as: `Primary Keyword — Unique Value Proposition / Hook | Brand Name`.
+- **High-CTR Meta Description**: 150–160 characters packed with primary/secondary keywords and a compelling call-to-action that maximizes Click-Through Rates (CTR) from the SERP.
+- **OpenGraph Protocol**: Full suite of `og:title`, `og:description`, `og:image` (1200x630px high-resolution banner), `og:url`, `og:type` (`website` or `article`), `og:site_name`, and `og:locale`.
+- **Twitter / X Cards**: Complete `twitter:card` (`summary_large_image`), `twitter:site`, `twitter:creator`, `twitter:title`, `twitter:description`, and `twitter:image`.
+- **Canonicalization**: Unambiguous self-referencing canonical URL (`<link rel="canonical" href="...">`) to completely prevent duplicate content penalties.
+- **Search Engine Crawler Directives**: `<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">`.
+- **Mobile & PWA Metadata**: `viewport` (width=device-width, initial-scale=1.0), `theme-color`, `apple-mobile-web-app-capable`, `apple-mobile-web-app-status-bar-style`.
+
+### C. Multi-Entity Schema.org JSON-LD Structured Data
+- Integrate interconnected Schema.org JSON-LD graphs via `<script type="application/ld+json">`:
+  - **`WebSite`**: With `potentialAction: SearchAction` for Google Sitelinks Search Box activation.
+  - **`Organization`**: Complete with brand name, official URL, high-res logo, founder/executive data, and `sameAs` verified social profiles.
+  - **`WebPage` / `ItemPage`**: Complete breadcrumb path (`BreadcrumbList`).
+  - **`FAQPage`**: Dedicated FAQ schema mapping questions and concise answers for Google rich drop-down snippets in SERPs.
+  - **Domain Specific Entities**: `SoftwareApplication`, `Product`, `Article`, `Service`, or `LocalBusiness` with ratings, offers, and author citations.
+
+### D. Standards-Compliant Sitemaps (`sitemap.xml`) & `robots.txt`
+- **XML Sitemap (`sitemap.xml`)**: Always author and maintain a valid XML sitemap adhering strictly to `xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"` containing `<loc>`, `<lastmod>` (ISO 8601), `<changefreq>`, and `<priority>` weights for all public routes.
+- **Robots Configuration (`robots.txt`)**: Always generate a clean `robots.txt` granting explicit crawl access to Googlebot and major search spiders with a direct reference to the sitemap: `Sitemap: https://<domain>/sitemap.xml`.
+- **AI Agent Discoverability**: Audit and configure specific bot rules (`OAI-SearchBot`, `PerplexityBot`, `Claude-SearchBot`, `Google-Extended`) to ensure full search visibility across generative search engines.
+
+### E. Technical Google Rank #1 & Core Web Vitals Architecture
+- **Semantic HTML5 Hierarchy**: Strictly enforce proper semantic DOM trees (`<header>`, `<nav>`, `<main>`, `<article>`, `<section>`, `<aside>`, `<footer>`) with a single unique `<h1>` per page.
+- **Core Web Vitals Thresholds**: Ensure instant First Contentful Paint ($< 0.8\text{s}$), Largest Contentful Paint ($< 1.2\text{s}$), zero Cumulative Layout Shift ($\text{CLS} < 0.05$), and ultra-responsive Interaction to Next Paint ($\text{INP} < 100\text{ms}$).
+- **Generative Engine Optimization (GEO) & Answer Engine Optimization (AEO)**: Structure clear, direct definition paragraphs and summary tables under `<h2>` queries so modern AI engines (Google AI Overviews, Perplexity, ChatGPT Search) extract and cite the page as the definitive #1 authority source.
+
